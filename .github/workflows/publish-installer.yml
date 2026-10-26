@@ -66,6 +66,8 @@ jobs:
 
           O código-fonte e os arquivos pessoais permanecem privados. Este canal contém apenas instaladores, hashes de integridade e as instruções de publicação.
 
+          Correção 0.5.1: resolve “Redirect was cancelled” no atualizador Electron. Se o aplicativo antigo não conseguir baixar, feche-o e instale este .exe manualmente uma vez. O perfil e os treinos são preservados. Testes incluem redirecionamento no Electron real e download público no Windows, com verificação de integridade.
+
           Layout compacto por abas para notebook: replay, gráficos, setores, ideal e detalhe A/B. Seleção de voltas em janela própria; listas extensas têm rolagem interna. A janela inicial respeita o tamanho útil do monitor.
 
           NOVO: conexão Wi-Fi EXPERIMENTAL com busca, listagem e download para SOLO 2/SOLO 2 DL. Falta validação no aparelho físico do usuário; os testes usam simulador TCP e XRZ real. Para testar: conecte o Windows ao Wi-Fi do aparelho, feche o Race Studio, abra Conectar aparelho e busque e liste os treinos. A inicialização sincroniza o relógio do aparelho com o computador. SOLO original usa USB/RS2; USB direto/DRK e Bluetooth não estão implementados. Outros AiM Wi-Fi são experimentais, sem compatibilidade universal de protocolo ou arquivo.
