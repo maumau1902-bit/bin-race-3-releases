@@ -66,11 +66,13 @@ jobs:
 
           O código-fonte e os arquivos pessoais permanecem privados. Este canal contém apenas instaladores, hashes de integridade e as instruções de publicação.
 
-          Versão 0.5.3: Volta ideal e metas passa a ter uma área própria no menu, com seleção de arquivos, volta difícil e cenários de melhores setores. A análise inicial e o replay ficam concentrados nos dados reais.
+          Versão 0.6.0: novo Relatório por curva com escolha de arquivo/volta A e referência B, entrada/mínima/saída, posições estimadas de redução e retomada, recuperação, gaps e prioridades para revisar. Gráfico interativo, acesso ao replay e exportação CSV com origem dos dados.
 
-          O usuário confirmou descoberta e download Wi-Fi no SOLO 2 com a 0.5.2. Outros aparelhos/firmwares e a comparação completa de arquivos/tempos com o Race Studio seguem pendentes.
+          As observações usam velocidade/GPS; não medem acionamento real de freio/acelerador, não definem um ponto ideal de frenagem nem prometem ganho. Somente as duas voltas escolhidas entram no relatório; a seleção da volta ideal permanece independente.
 
-          Novo acesso em Conectar aparelho > Pistas e configurações: abre o Race Studio 3 instalado no Windows e orienta a criação/importação de pistas e ajustes do aparelho. Você revisa e confirma a transmissão no programa oficial. O envio direto pelo Bin Race e a geração de .tkk NÃO estão implementados. O botão não informa que enviou ao aparelho.
+          Novo botão Limpar análise: fecha sessão/referências/replay e deixa a tela sem sessão aberta, inclusive ao reiniciar. Os treinos e detalhes em Minhas sessões, preferências da ideal e arquivos originais são preservados. Abra um salvo ou importe outro para continuar.
+
+          Mantém a área própria de Volta ideal e metas e o acesso em Conectar aparelho > Pistas e configurações para abrir o Race Studio oficial. Envio direto de pistas/configurações pelo Bin Race NÃO está implementado; revise e confirme a transmissão no Race Studio.
 
           Mantém a correção do atualizador da 0.5.1. Use Atualizações com internet; versões antigas com Redirect was cancelled precisam instalar este .exe manualmente uma vez. Perfil e treinos são preservados.
 
