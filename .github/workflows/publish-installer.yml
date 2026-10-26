@@ -66,7 +66,9 @@ jobs:
 
           O código-fonte e os arquivos pessoais permanecem privados. Este canal contém apenas instaladores, hashes de integridade e as instruções de publicação.
 
-          Inclui replay A/B, reconhecimento GPS de curvas, gaps por setor e acumulado, volta ideal apenas dos arquivos selecionados manualmente e detalhes editáveis de sessão. Estimativas por GPS não substituem canais de freio/acelerador. Esta versão inicial não possui assinatura digital.
+          Inclui comparação de múltiplas voltas avulsas em mapa, gráficos e setores, reconhecimento GPS de curvas, gaps por setor e acumulado, volta ideal apenas dos arquivos selecionados manualmente e detalhes editáveis de sessão. Estimativas por GPS não substituem canais de freio/acelerador. Esta versão inicial não possui assinatura digital.
+
+          Acesso direto em Volta ideal e metas, com origem de cada melhor setor. Volta difícil: meta extra mais rápida que a ideal, com percentual ajustável e fórmula explícita. É uma meta escolhida, não previsão de desempenho. Atualizações podem ser baixadas pelo botão do aplicativo a partir da 0.3.0.
 
           A geração e os testes de instalação, atalhos e desinstalação são executados no Windows do GitHub antes da publicação. Bin-Race-3-SHA256SUMS.txt contém o SHA-256 do instalador.
           NOTES
