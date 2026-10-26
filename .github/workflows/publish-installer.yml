@@ -66,15 +66,15 @@ jobs:
 
           O código-fonte e os arquivos pessoais permanecem privados. Este canal contém apenas instaladores, hashes de integridade e as instruções de publicação.
 
-          Versão 0.6.0: novo Relatório por curva com escolha de arquivo/volta A e referência B, entrada/mínima/saída, posições estimadas de redução e retomada, recuperação, gaps e prioridades para revisar. Gráfico interativo, acesso ao replay e exportação CSV com origem dos dados.
+          Versão 0.7.0: Plano de melhoria na área Volta ideal e metas. Marque os arquivos, escolha a volta de partida (padrão: melhor real do conjunto) e clique Iniciar análise de melhora de volta. Mostra origem dos melhores setores, entrada/saída/retomada estimadas, diferença por curva e acumulado até a ideal, com CSV. Alterar parâmetros exige novo clique; arquivos e dias não marcados ficam fora.
 
-          As observações usam velocidade/GPS; não medem acionamento real de freio/acelerador, não definem um ponto ideal de frenagem nem prometem ganho. Somente as duas voltas escolhidas entram no relatório; a seleção da volta ideal permanece independente.
+          A combinação é matemática e não garante repetir os melhores trechos juntos. Estimativas GPS não medem acionamento de freio/acelerador. A volta difícil continua como meta separada.
 
-          Novo botão Limpar análise: fecha sessão/referências/replay e deixa a tela sem sessão aberta, inclusive ao reiniciar. Os treinos e detalhes em Minhas sessões, preferências da ideal e arquivos originais são preservados. Abra um salvo ou importe outro para continuar.
+          Novo atualizador: a partir da versão instalada 0.7.0, Atualizar para… baixa/verifica, prepara os arquivos enquanto o app está aberto e fecha/reabre automaticamente, sem assistente normal. A versão antiga ainda precisa receber esta melhoria pelo fluxo anterior uma vez. Inclui recuperação em falha de cópia, preservação de perfil/arquivos extras e verificação no Windows antes da publicação.
 
-          Mantém a área própria de Volta ideal e metas e o acesso em Conectar aparelho > Pistas e configurações para abrir o Race Studio oficial. Envio direto de pistas/configurações pelo Bin Race NÃO está implementado; revise e confirme a transmissão no Race Studio.
+          Transferência gravada em blocos maiores, com MB/s, ETA e tempo por etapa. A velocidade depende da rede, disco e verificações do sistema; não há taxa garantida nem causa confirmada para a diferença entre computadores.
 
-          Mantém a correção do atualizador da 0.5.1. Use Atualizações com internet; versões antigas com Redirect was cancelled precisam instalar este .exe manualmente uma vez. Perfil e treinos são preservados.
+          Mantém Relatório por curva A/B, Limpar análise preservando Minhas sessões e acesso ao Race Studio para enviar pistas/configurações. Envio direto pelo Bin Race não está implementado. Sem certificado público do editor: políticas do Windows podem exigir confirmação ou bloquear a execução.
 
           Layout compacto por abas para notebook: replay, gráficos, setores, ideal e detalhe A/B. Seleção de voltas em janela própria; listas extensas têm rolagem interna. A janela inicial respeita o tamanho útil do monitor.
 
