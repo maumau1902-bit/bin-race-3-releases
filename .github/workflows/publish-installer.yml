@@ -66,13 +66,17 @@ jobs:
 
           O código-fonte e os arquivos pessoais permanecem privados. Este canal contém apenas instaladores, hashes de integridade e as instruções de publicação.
 
-          Correção 0.5.2: amplia a leitura da lista de treinos Wi-Fi e solicita uma lista nova quando o cache do aparelho não é reconhecido. Aceita variações de codificação e separador e oferece diagnóstico de formato sem dados pessoais. O SOLO 2 foi encontrado no teste do usuário, mas a listagem falhou; esta correção ainda precisa ser confirmada no aparelho físico. Testes usam variantes sintéticas e servidor TCP local.
+          Versão 0.5.3: Volta ideal e metas passa a ter uma área própria no menu, com seleção de arquivos, volta difícil e cenários de melhores setores. A análise inicial e o replay ficam concentrados nos dados reais.
 
-          Mantém a correção do atualizador da 0.5.1. Na 0.5.1, use Atualizações com internet. Em versões antigas com “Redirect was cancelled”, feche o app e instale este .exe manualmente uma vez. Perfil e treinos são preservados.
+          O usuário confirmou descoberta e download Wi-Fi no SOLO 2 com a 0.5.2. Outros aparelhos/firmwares e a comparação completa de arquivos/tempos com o Race Studio seguem pendentes.
+
+          Novo acesso em Conectar aparelho > Pistas e configurações: abre o Race Studio 3 instalado no Windows e orienta a criação/importação de pistas e ajustes do aparelho. Você revisa e confirma a transmissão no programa oficial. O envio direto pelo Bin Race e a geração de .tkk NÃO estão implementados. O botão não informa que enviou ao aparelho.
+
+          Mantém a correção do atualizador da 0.5.1. Use Atualizações com internet; versões antigas com Redirect was cancelled precisam instalar este .exe manualmente uma vez. Perfil e treinos são preservados.
 
           Layout compacto por abas para notebook: replay, gráficos, setores, ideal e detalhe A/B. Seleção de voltas em janela própria; listas extensas têm rolagem interna. A janela inicial respeita o tamanho útil do monitor.
 
-          Conexão Wi-Fi EXPERIMENTAL com busca, listagem e download para SOLO 2/SOLO 2 DL. A descoberta funcionou no aparelho do usuário; listagem/download seguem pendentes de validação; os testes usam simulador TCP e XRZ real. Para testar: conecte o Windows ao Wi-Fi do aparelho, feche o Race Studio, abra Conectar aparelho e busque e liste os treinos. A inicialização sincroniza o relógio do aparelho com o computador. SOLO original usa USB/RS2; USB direto/DRK e Bluetooth não estão implementados. Outros AiM Wi-Fi são experimentais, sem compatibilidade universal de protocolo ou arquivo.
+          Conexão Wi-Fi EXPERIMENTAL com busca, listagem e download para SOLO 2/SOLO 2 DL. O usuário confirmou descoberta e download no SOLO 2; outros modelos e firmwares seguem pendentes de validação. Os testes próprios usam simulador TCP e XRZ real. Para testar: conecte o Windows ao Wi-Fi do aparelho, feche o Race Studio, abra Conectar aparelho e busque e liste os treinos. A inicialização sincroniza o relógio do aparelho com o computador. SOLO original usa USB/RS2; USB direto/DRK e Bluetooth não estão implementados. Outros AiM Wi-Fi são experimentais, sem compatibilidade universal de protocolo ou arquivo.
 
           SmartScreen: o processo de assinatura foi preparado, mas falta emitir/configurar um certificado público do editor. Esta entrega continua sem essa assinatura e o aviso de aplicativo não reconhecido pode permanecer. Assinatura nova também depende de reputação; não há promessa de remoção imediata do aviso.
 
