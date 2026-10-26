@@ -66,6 +66,12 @@ jobs:
 
           O código-fonte e os arquivos pessoais permanecem privados. Este canal contém apenas instaladores, hashes de integridade e as instruções de publicação.
 
+          Layout compacto por abas para notebook: replay, gráficos, setores, ideal e detalhe A/B. Seleção de voltas em janela própria; listas extensas têm rolagem interna. A janela inicial respeita o tamanho útil do monitor.
+
+          NOVO: conexão Wi-Fi EXPERIMENTAL com busca, listagem e download para SOLO 2/SOLO 2 DL. Falta validação no aparelho físico do usuário; os testes usam simulador TCP e XRZ real. Para testar: conecte o Windows ao Wi-Fi do aparelho, feche o Race Studio, abra Conectar aparelho e busque e liste os treinos. A inicialização sincroniza o relógio do aparelho com o computador. SOLO original usa USB/RS2; USB direto/DRK e Bluetooth não estão implementados. Outros AiM Wi-Fi são experimentais, sem compatibilidade universal de protocolo ou arquivo.
+
+          SmartScreen: o processo de assinatura foi preparado, mas falta emitir/configurar um certificado público do editor. Esta entrega continua sem essa assinatura e o aviso de aplicativo não reconhecido pode permanecer. Assinatura nova também depende de reputação; não há promessa de remoção imediata do aviso.
+
           Inclui comparação de múltiplas voltas avulsas em mapa, gráficos e setores, reconhecimento GPS de curvas, gaps por setor e acumulado, volta ideal apenas dos arquivos selecionados manualmente e detalhes editáveis de sessão. Estimativas por GPS não substituem canais de freio/acelerador. Esta versão inicial não possui assinatura digital.
 
           Acesso direto em Volta ideal e metas, com origem de cada melhor setor. Volta difícil: meta extra mais rápida que a ideal, com percentual ajustável e fórmula explícita. É uma meta escolhida, não previsão de desempenho. Atualizações podem ser baixadas pelo botão do aplicativo a partir da 0.3.0.
