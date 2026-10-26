@@ -66,7 +66,9 @@ jobs:
 
           O código-fonte e os arquivos pessoais permanecem privados. Este canal contém apenas instaladores, hashes de integridade e as instruções de publicação.
 
-          Versão 0.7.0: Plano de melhoria na área Volta ideal e metas. Marque os arquivos, escolha a volta de partida (padrão: melhor real do conjunto) e clique Iniciar análise de melhora de volta. Mostra origem dos melhores setores, entrada/saída/retomada estimadas, diferença por curva e acumulado até a ideal, com CSV. Alterar parâmetros exige novo clique; arquivos e dias não marcados ficam fora.
+          Versão 0.7.1: seleção de voltas mais clara. O seletor Volta em análise fica no topo da análise, replay e ideal; a melhor volta da sessão aparece separadamente. Na lista múltipla, Analisar esta volta escolhe o detalhe individual sem perder as demais voltas ou a referência dos gaps. A escolha de cada sessão e a última sessão aberta são restauradas ao reabrir. As caixas continuam escolhendo as linhas de mapas/gráficos; o alvo continua escolhendo a referência. O Relatório por curva agora tem dois blocos A/B com arquivo, volta específica e botão Usar melhor de cada lado. Trocar A preserva B e trocar B preserva A; escolher um setor mantém o par. A mesma organização aparece no detalhe A/B.
+
+          Mantém o plano de melhoria na área Volta ideal e metas. Marque os arquivos, escolha a volta de partida (padrão: melhor real do conjunto) e clique Iniciar análise de melhora de volta. Mostra origem dos melhores setores, entrada/saída/retomada estimadas, diferença por curva e acumulado até a ideal, com CSV. Alterar parâmetros exige novo clique; arquivos e dias não marcados ficam fora.
 
           A combinação é matemática e não garante repetir os melhores trechos juntos. Estimativas GPS não medem acionamento de freio/acelerador. A volta difícil continua como meta separada.
 
