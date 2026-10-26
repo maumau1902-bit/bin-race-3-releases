@@ -1,0 +1,73 @@
+name: Publicar instalador do Bin Race 3
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Versão estável do aplicativo
+        required: true
+        type: string
+      installer_url:
+        description: URL temporária de download do instalador já gerado
+        required: true
+        type: string
+      sha256:
+        description: SHA-256 esperado do instalador
+        required: true
+        type: string
+permissions:
+  contents: write
+concurrency:
+  group: public-release-${{ inputs.version }}
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Obter somente o instalador e conferir a integridade
+        env:
+          INSTALLER_URL: ${{ inputs.installer_url }}
+          APP_VERSION: ${{ inputs.version }}
+          EXPECTED_SHA256: ${{ inputs.sha256 }}
+        run: |
+          echo "::add-mask::$INSTALLER_URL"
+          python - <<'PY'
+          import os,re,urllib.request,urllib.parse,hashlib
+          version=os.environ['APP_VERSION'];expected=os.environ['EXPECTED_SHA256'].lower()
+          if not re.fullmatch(r'(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)',version):raise SystemExit('Versão inválida.')
+          if not re.fullmatch(r'[a-f0-9]{64}',expected):raise SystemExit('SHA-256 inválido.')
+          url=urllib.parse.urlsplit(os.environ['INSTALLER_URL'])
+          if url.scheme!='https' or url.hostname not in ('release-assets.githubusercontent.com','objects.githubusercontent.com') or url.username or url.password:raise SystemExit('Origem de download não autorizada.')
+          name=f'Bin-Race-3-Setup-{version}.exe';digest=hashlib.sha256();total=0;prefix=b''
+          try:
+            with urllib.request.urlopen(os.environ['INSTALLER_URL'],timeout=60) as response,open(name,'wb') as output:
+              while True:
+                chunk=response.read(65536)
+                if not chunk:break
+                total+=len(chunk)
+                if total>256*1024*1024:raise ValueError('Instalador maior que o permitido.')
+                if len(prefix)<2:prefix=(prefix+chunk)[:2]
+                output.write(chunk);digest.update(chunk)
+          except Exception:raise SystemExit('Falha no download temporário do instalador. Gere uma nova solicitação de publicação.')
+          if digest.hexdigest()!=expected or prefix!=b'MZ':raise SystemExit('A integridade do instalador não confere.')
+          open('Bin-Race-3-SHA256SUMS.txt','w').write(f'{expected}  {name}\n')
+          print(f'Instalador verificado: {name}, {total} bytes. Nenhum código privado ou arquivo de usuário foi obtido.')
+          PY
+      - name: Publicar arquivos de atualização
+        env:
+          GH_TOKEN: ${{ github.token }}
+          APP_VERSION: ${{ inputs.version }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          cat > notes.md <<'NOTES'
+          Instalador do Bin Race 3 para Windows 10/11 de 64 bits.
+
+          Baixe o arquivo Bin-Race-3-Setup abaixo e siga o assistente em português. Se o aplicativo já estiver instalado, feche-o antes de atualizar. Os treinos e detalhes permanecem no perfil local.
+
+          O código-fonte e os arquivos pessoais permanecem privados. Este canal contém apenas instaladores, hashes de integridade e as instruções de publicação.
+
+          Inclui replay A/B, reconhecimento GPS de curvas, gaps por setor e acumulado, volta ideal apenas dos arquivos selecionados manualmente e detalhes editáveis de sessão. Estimativas por GPS não substituem canais de freio/acelerador. Esta versão inicial não possui assinatura digital.
+
+          A geração e os testes de instalação, atalhos e desinstalação são executados no Windows do GitHub antes da publicação. Bin-Race-3-SHA256SUMS.txt contém o SHA-256 do instalador.
+          NOTES
+          gh release create "v$APP_VERSION" "Bin-Race-3-Setup-$APP_VERSION.exe" Bin-Race-3-SHA256SUMS.txt --repo "$GH_REPO" --title "Bin Race 3 $APP_VERSION" --notes-file notes.md
