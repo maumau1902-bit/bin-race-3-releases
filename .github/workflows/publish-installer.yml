@@ -66,16 +66,20 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           cat > notes.md <<'NOTES'
-          Bin Race 3 0.8.1 — zoom livre no traçado durante o Play.
+          Bin Race 3 0.9.0 — diagnóstico de validade do tempo.
 
-          A 0.8.0 oferecia ampliação pelo seletor Trecho em foco. Esta atualização acrescenta controles no próprio mapa: lupas +/−, roda do mouse para ampliar no ponto apontado, arrastar para mover e Pista inteira para restaurar o enquadramento. Essas ações mantêm o replay rodando e preservam seu relógio. Um clique simples continua posicionando o replay; arrastar não é confundido com esse clique.
+          Nova aba lateral Validade do tempo. Selecione a sessão e a volta no topo, escolha examinar essa volta ou todas da sessão e clique em Verificar tempo. O relatório só é gerado mediante essa ação; mudar os parâmetros invalida o resultado anterior.
 
-          Com foco no mapa: +/− ampliam/reduzem, setas movem e 0 restaura a pista. Pista inteira também limpa o foco de setor. Os controles aparecem no mapa do replay e nas demais visualizações que usam esse traçado, incluindo o editor de setores. Mantém os controles acessíveis em notebooks com pouca altura.
+          Verificações dos dados importados: relógio, intervalos/cobertura, saltos de posição versus velocidade, coordenadas repetidas com velocidade, variações abruptas de velocidade, precisão/satélites quando presentes, coerência de marcos e transição entre voltas. Compara a distância geométrica reamostrada à integral da velocidade, deixando claro que são canais do mesmo GPS e não instrumentos independentes.
 
-          O editor já existente continua em Replay e setores > Replay > Editar setores, acima do mapa, ao lado de Trecho em foco. Consistência, melhores N, backup/PDF, vídeo, rolling lap e seleção explícita da ideal permanecem. A ampliação usa as amostras existentes; não altera a precisão dos dados GPS registrados.
+          Referência confiável opcional, escolhida manualmente. Com qualidade suficiente: compara afastamentos sustentados do trajeto, possíveis encurtamentos e marcos de largada/chegada relativos à linha inferida do GPS da referência. Mostra tolerâncias usadas e cruzamentos internos da linha. Falhas GPS não são transformadas automaticamente em corte de pista; referência defeituosa suspende a comparação geométrica.
 
-          Atualização incremental para bases compatíveis, com verificação de integridade, preparação, recuperação e reabertura automática. Código e telemetria permanecem privados. Sem certificado público novo; avisos do Windows podem permanecer.
+          Resultados: Anomalias para revisar, Dados insuficientes ou Sem alerta nos testes executados. Cada achado apresenta intervalo, evidência, pontos no mapa e amostras próximas. Setores afetados são destacados no mapa e filtram os achados; a divisão respeita a referência e os setores revisados disponíveis. Lacunas usam os extremos para indicar região, sem inventar o trajeto desconhecido. Falhas globais abrangem toda a volta; ausência de base fica sem localização. PDF inclui setor/alcance e exporta a volta aberta, referência, verificações, achados e limites. Na análise de sessão inteira, cada volta tem seu próprio resultado, e PDF da sessão reúne os resultados e achados por volta/setor.
 
-          Para a primeira instalação, baixe Bin-Race-3-Setup-0.8.1.exe. Pacotes Update são usados pelo aplicativo; o catálogo JSON não é um instalador. Código-fonte e arquivos de telemetria permanecem privados.
+          Não é certificado de tempo válido, autenticidade ou prova de fraude/intenção. Sem alertas não garante ausência de corte. Não há limites físicos oficiais nem linha oficial cadastrados; a linha de referência é inferida de outra volta. Amostras e marcos podem depender de interpolação/importação. Conteúdo recusado pelo leitor ou não decodificado não é recuperado nesta aba. Nenhum tempo é corrigido ou excluído.
+
+          Mantém a correção 0.8.1: zoom livre por lupas/roda, arrastar e Pista inteira no próprio mapa durante o Play, preservando relógio e reprodução. Editor de setores continua acima do mapa. Biblioteca, ideal, vídeo, rolling, backup/PDF e atualização incremental preservados. Código e telemetria privados; sem certificado público novo.
+
+          Para a primeira instalação, baixe Bin-Race-3-Setup-0.9.0.exe. Pacotes Update são usados pelo aplicativo; o catálogo JSON não é um instalador. Código-fonte e arquivos de telemetria permanecem privados.
           NOTES
           gh release create "v$APP_VERSION" Bin-Race-3-*.exe Bin-Race-3-Update-*.json Bin-Race-3-SHA256SUMS.txt --repo "$GH_REPO" --title "Bin Race 3 $APP_VERSION" --notes-file notes.md
