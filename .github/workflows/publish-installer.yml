@@ -3,15 +3,11 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: Versão estável do aplicativo
+        description: Versão estável
         required: true
         type: string
-      installer_url:
-        description: URL temporária de download do instalador já gerado
-        required: true
-        type: string
-      sha256:
-        description: SHA-256 esperado do instalador
+      asset_bundle:
+        description: Pacotes autorizados com URLs temporárias, nomes, tamanhos e hashes
         required: true
         type: string
 permissions:
@@ -22,36 +18,46 @@ concurrency:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
-      - name: Obter somente o instalador e conferir a integridade
-        env:
-          APP_VERSION: ${{ inputs.version }}
-          EXPECTED_SHA256: ${{ inputs.sha256 }}
+      - name: Obter somente os pacotes e verificar a integridade
         run: |
           python - <<'PY'
-          import os,re,urllib.request,urllib.parse,hashlib,json
-          installer_url=json.load(open(os.environ['GITHUB_EVENT_PATH']))['inputs']['installer_url']
-          print(f'::add-mask::{installer_url}')
-          version=os.environ['APP_VERSION'];expected=os.environ['EXPECTED_SHA256'].lower()
+          import os,json,re,urllib.request,urllib.parse,hashlib
+          inputs=json.load(open(os.environ['GITHUB_EVENT_PATH']))['inputs']
+          version=inputs['version'];bundle=json.loads(inputs['asset_bundle'])
           if not re.fullmatch(r'(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)',version):raise SystemExit('Versão inválida.')
-          if not re.fullmatch(r'[a-f0-9]{64}',expected):raise SystemExit('SHA-256 inválido.')
-          url=urllib.parse.urlsplit(installer_url)
-          if url.scheme!='https' or url.hostname not in ('release-assets.githubusercontent.com','objects.githubusercontent.com') or url.username or url.password:raise SystemExit('Origem de download não autorizada.')
-          name=f'Bin-Race-3-Setup-{version}.exe';digest=hashlib.sha256();total=0;prefix=b''
-          try:
-            with urllib.request.urlopen(installer_url,timeout=60) as response,open(name,'wb') as output:
-              while True:
-                chunk=response.read(65536)
-                if not chunk:break
-                total+=len(chunk)
-                if total>256*1024*1024:raise ValueError('Instalador maior que o permitido.')
-                if len(prefix)<2:prefix=(prefix+chunk)[:2]
-                output.write(chunk);digest.update(chunk)
-          except Exception:raise SystemExit('Falha no download temporário do instalador. Gere uma nova solicitação de publicação.')
-          if digest.hexdigest()!=expected or prefix!=b'MZ':raise SystemExit('A integridade do instalador não confere.')
-          open('Bin-Race-3-SHA256SUMS.txt','w').write(f'{expected}  {name}\n')
-          print(f'Instalador verificado: {name}, {total} bytes. Nenhum código privado ou arquivo de usuário foi obtido.')
+          if not isinstance(bundle,list) or not 3<=len(bundle)<=6:raise SystemExit('Lista de pacotes inválida.')
+          names=set();total=0
+          for item in bundle:
+            name=item['name'];url=item['url'];print(f'::add-mask::{url}')
+            valid=name in (f'Bin-Race-3-Setup-{version}.exe',f'Bin-Race-3-Update-{version}.json','Bin-Race-3-SHA256SUMS.txt') or re.fullmatch(r'Bin-Race-3-Update-'+re.escape(version)+r'-from-\d+\.\d+\.\d+\.exe',name)
+            if not valid or name in names or not re.fullmatch('[a-f0-9]{64}',item['sha256']):raise SystemExit('Nome/hash inválido.')
+            names.add(name);size=item['size']
+            if not isinstance(size,int) or not 0<size<=2*1024**3:raise SystemExit('Tamanho inválido.')
+            total+=size
+            if total>8*1024**3:raise SystemExit('Tamanho total inválido.')
+            parsed=urllib.parse.urlsplit(url)
+            if parsed.scheme!='https' or parsed.hostname not in ('release-assets.githubusercontent.com','objects.githubusercontent.com') or parsed.username or parsed.password:raise SystemExit('Origem não autorizada.')
+          if not {f'Bin-Race-3-Setup-{version}.exe',f'Bin-Race-3-Update-{version}.json','Bin-Race-3-SHA256SUMS.txt'}<=names:raise SystemExit('Faltam arquivos obrigatórios.')
+          for item in bundle:
+            digest=hashlib.sha256();received=0;prefix=b''
+            try:
+              with urllib.request.urlopen(item['url'],timeout=60) as response,open(item['name'],'wb') as output:
+                final=urllib.parse.urlsplit(response.geturl())
+                if final.scheme!='https' or final.hostname not in ('release-assets.githubusercontent.com','objects.githubusercontent.com'):raise ValueError('Origem final inválida.')
+                while True:
+                  chunk=response.read(1024*1024)
+                  if not chunk:break
+                  received+=len(chunk)
+                  if received>item['size']:raise ValueError('Tamanho excedido.')
+                  if len(prefix)<2:prefix=(prefix+chunk)[:2]
+                  output.write(chunk);digest.update(chunk)
+            except Exception:raise SystemExit('Falha no download temporário. Gere nova publicação.')
+            if received!=item['size'] or digest.hexdigest()!=item['sha256'] or (item['name'].endswith('.exe') and prefix!=b'MZ'):raise SystemExit('Integridade inválida.')
+            print(f"Verificado: {item['name']}, {received} bytes.")
+          sums={line.split('  ',1)[1]:line.split('  ',1)[0] for line in open('Bin-Race-3-SHA256SUMS.txt').read().splitlines()}
+          if sums!={item['name']:item['sha256'] for item in bundle if item['name']!='Bin-Race-3-SHA256SUMS.txt'}:raise SystemExit('Inventário de hashes divergente.')
           PY
       - name: Publicar arquivos de atualização
         env:
@@ -60,34 +66,18 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           cat > notes.md <<'NOTES'
-          Instalador do Bin Race 3 para Windows 10/11 de 64 bits.
+          Bin Race 3 0.7.2 — Windows 10/11 de 64 bits.
 
-          Baixe o arquivo Bin-Race-3-Setup abaixo e siga o assistente em português. Se o aplicativo já estiver instalado, feche-o antes de atualizar. Os treinos e detalhes permanecem no perfil local.
+          Novo atualizador por arquivos. A publicação gera inventário com SHA-256 e pacotes menores para até três versões anteriores compatíveis. O app escolhe o pacote adequado, confere a instalação e baixa somente arquivos alterados/novos; arquivos antigos removidos da distribuição são tratados pelo pacote. O motor não é reenviado quando permanece igual.
 
-          O código-fonte e os arquivos pessoais permanecem privados. Este canal contém apenas instaladores, hashes de integridade e as instruções de publicação.
+          Esta versão introduz o mecanismo. Versões 0.7.1 e anteriores ainda baixam o instalador completo uma vez para recebê-lo. As próximas publicações terão pacotes incrementais a partir da 0.7.2. Sem pacote compatível ou com arquivos de base diferentes, o app usa o completo; caminhos irregulares ou conflito com arquivo pessoal bloqueiam o processo.
 
-          Versão 0.7.1: seleção de voltas mais clara. O seletor Volta em análise fica no topo da análise, replay e ideal; a melhor volta da sessão aparece separadamente. Na lista múltipla, Analisar esta volta escolhe o detalhe individual sem perder as demais voltas ou a referência dos gaps. A escolha de cada sessão e a última sessão aberta são restauradas ao reabrir. As caixas continuam escolhendo as linhas de mapas/gráficos; o alvo continua escolhendo a referência. O Relatório por curva agora tem dois blocos A/B com arquivo, volta específica e botão Usar melhor de cada lado. Trocar A preserva B e trocar B preserva A; escolher um setor mantém o par. A mesma organização aparece no detalhe A/B.
+          Preparação com app aberto, substituição com app fechado, SHA-256 nativo antes/depois, recuperação e reabertura automática. Os dados de treino permanecem no perfil local. Um arquivo alterado é baixado inteiro, não apenas seus bytes diferentes; o app.asar concentra o código e é pequeno comparado ao motor Electron.
 
-          Mantém o plano de melhoria na área Volta ideal e metas. Marque os arquivos, escolha a volta de partida (padrão: melhor real do conjunto) e clique Iniciar análise de melhora de volta. Mostra origem dos melhores setores, entrada/saída/retomada estimadas, diferença por curva e acumulado até a ideal, com CSV. Alterar parâmetros exige novo clique; arquivos e dias não marcados ficam fora.
+          Mantém escolha exata de volta, relatório A/B com uma sessão/volta de cada lado, comparação múltipla, replay, ideal somente dos arquivos marcados, plano manual de melhoria e limpeza preservando Minhas sessões.
 
-          A combinação é matemática e não garante repetir os melhores trechos juntos. Estimativas GPS não medem acionamento de freio/acelerador. A volta difícil continua como meta separada.
+          Código-fonte e telemetria privados. O inventário público contém apenas caminhos relativos, tamanhos e hashes dos arquivos distribuídos. Sem certificado público novo: avisos do Windows podem permanecer. Estimativas GPS não medem comandos de freio/acelerador. Wi-Fi confirmado pelo usuário no SOLO 2; envio de pistas/configuração continua pelo Race Studio.
 
-          Novo atualizador: a partir da versão instalada 0.7.0, Atualizar para… baixa/verifica, prepara os arquivos enquanto o app está aberto e fecha/reabre automaticamente, sem assistente normal. A versão antiga ainda precisa receber esta melhoria pelo fluxo anterior uma vez. Inclui recuperação em falha de cópia, preservação de perfil/arquivos extras e verificação no Windows antes da publicação.
-
-          Transferência gravada em blocos maiores, com MB/s, ETA e tempo por etapa. A velocidade depende da rede, disco e verificações do sistema; não há taxa garantida nem causa confirmada para a diferença entre computadores.
-
-          Mantém Relatório por curva A/B, Limpar análise preservando Minhas sessões e acesso ao Race Studio para enviar pistas/configurações. Envio direto pelo Bin Race não está implementado. Sem certificado público do editor: políticas do Windows podem exigir confirmação ou bloquear a execução.
-
-          Layout compacto por abas para notebook: replay, gráficos, setores, ideal e detalhe A/B. Seleção de voltas em janela própria; listas extensas têm rolagem interna. A janela inicial respeita o tamanho útil do monitor.
-
-          Conexão Wi-Fi EXPERIMENTAL com busca, listagem e download para SOLO 2/SOLO 2 DL. O usuário confirmou descoberta e download no SOLO 2; outros modelos e firmwares seguem pendentes de validação. Os testes próprios usam simulador TCP e XRZ real. Para testar: conecte o Windows ao Wi-Fi do aparelho, feche o Race Studio, abra Conectar aparelho e busque e liste os treinos. A inicialização sincroniza o relógio do aparelho com o computador. SOLO original usa USB/RS2; USB direto/DRK e Bluetooth não estão implementados. Outros AiM Wi-Fi são experimentais, sem compatibilidade universal de protocolo ou arquivo.
-
-          SmartScreen: o processo de assinatura foi preparado, mas falta emitir/configurar um certificado público do editor. Esta entrega continua sem essa assinatura e o aviso de aplicativo não reconhecido pode permanecer. Assinatura nova também depende de reputação; não há promessa de remoção imediata do aviso.
-
-          Inclui comparação de múltiplas voltas avulsas em mapa, gráficos e setores, reconhecimento GPS de curvas, gaps por setor e acumulado, volta ideal apenas dos arquivos selecionados manualmente e detalhes editáveis de sessão. Estimativas por GPS não substituem canais de freio/acelerador. Esta versão inicial não possui assinatura digital.
-
-          Acesso direto em Volta ideal e metas, com origem de cada melhor setor. Volta difícil: meta extra mais rápida que a ideal, com percentual ajustável e fórmula explícita. É uma meta escolhida, não previsão de desempenho. O botão do aplicativo baixa atualizações a partir da 0.5.1; versões anteriores afetadas precisam de atualização manual uma vez.
-
-          A geração e os testes de instalação, atalhos e desinstalação são executados no Windows do GitHub antes da publicação. Bin-Race-3-SHA256SUMS.txt contém o SHA-256 do instalador.
+          Para instalar pela primeira vez, baixe Bin-Race-3-Setup-0.7.2.exe. Pacotes Update são usados pelo aplicativo; o catálogo JSON não é um instalador.
           NOTES
-          gh release create "v$APP_VERSION" "Bin-Race-3-Setup-$APP_VERSION.exe" Bin-Race-3-SHA256SUMS.txt --repo "$GH_REPO" --title "Bin Race 3 $APP_VERSION" --notes-file notes.md
+          gh release create "v$APP_VERSION" Bin-Race-3-*.exe Bin-Race-3-Update-*.json Bin-Race-3-SHA256SUMS.txt --repo "$GH_REPO" --title "Bin Race 3 $APP_VERSION" --notes-file notes.md
