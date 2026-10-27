@@ -66,20 +66,20 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           cat > notes.md <<'NOTES'
-          Bin Race 3 0.7.3 — Windows 10/11 de 64 bits.
+          Bin Race 3 0.7.4 — atualização ao abrir, seleção explícita e análise de treino.
 
-          Biblioteca de sessões: a importação guarda o treino no banco local e pede nome/piloto para abrir. Organizar depois mantém o rascunho identificado como pendente. Minhas sessões permite buscar por nome, piloto, moto, data, comentários ou arquivo e abrir sem localizar o original novamente. Limpar análise só fecha a área; apenas Remover sessão exclui do banco. Falhas de gravação ficam explícitas e permitem tentar salvar novamente.
+          Busca atualizações em segundo plano ao abrir o aplicativo instalado. Quando houver versão nova, mostra as mudanças e oferece Atualizar agora ou Agora não. Não baixa antes do aceite, aguarda outras janelas e funciona offline. Ao adiar, oferece novamente na próxima abertura. Mantém atualização incremental, verificação SHA-256, preparação, substituição, recuperação e reabertura automática.
 
-          Novo atualizador por arquivos. A publicação gera inventário com SHA-256 e pacotes menores para até três versões anteriores compatíveis. O app escolhe o pacote adequado, confere a instalação e baixa somente arquivos alterados/novos; arquivos antigos removidos da distribuição são tratados pelo pacote. O motor não é reenviado quando permanece igual.
+          Volta ideal em etapas: escolha manualmente sessões e voltas, defina a base GPS e confirme o cálculo. O conjunto começa vazio a cada reabertura da área; a seleção A/B não inclui arquivos na ideal. Resultados, plano manual e meta extra ficam separados. O plano usa os melhores setores escolhidos, com origem, diferenças e acumulados; navegar entre suas etapas preserva o plano enquanto os dados não mudarem.
 
-          O mecanismo foi introduzido na 0.7.2. Versões 0.7.1 e anteriores ainda baixam o instalador completo uma vez para recebê-lo. Esta publicação oferece pacote incremental a partir da 0.7.2. Sem pacote compatível ou com arquivos de base diferentes, o app usa o completo; caminhos irregulares ou conflito com arquivo pessoal bloqueiam o processo.
+          Em Replay e setores, a aba Grupos A/B permite escolher baterias de sessões, comparar a melhor volta real de cada grupo com gaps por setor/acumulados e abrir o par no relatório por curva. Não há inclusão automática por nome ou dia. Comparação livre de voltas, inclusive entre arquivos, continua disponível.
 
-          Preparação com app aberto, substituição com app fechado, SHA-256 nativo antes/depois, recuperação e reabertura automática. Os dados de treino permanecem no perfil local. Um arquivo alterado é baixado inteiro, não apenas seus bytes diferentes; o app.asar concentra o código e é pequeno comparado ao motor Electron.
+          Layout para notebooks com controles acessíveis e listas/tabelas em áreas internas. Biblioteca destaca melhor volta, piloto e data, com ordenação por tempo ou dia. Importações continuam exigindo identificação; limpar análise mantém os treinos no banco local.
 
-          Mantém escolha exata de volta, relatório A/B com uma sessão/volta de cada lado, comparação múltipla, replay, ideal somente dos arquivos marcados, plano manual de melhoria e limpeza preservando Minhas sessões.
+          Plano e relatório oferecem um cenário local de retomada antecipada quando os dados permitem. Aceleração constante e outras hipóteses são mostradas; o resultado não é previsão nem modifica a ideal observada. Sem integração com IA externa ou envio de telemetria. GPS não mede freio/acelerador nem comprova causa da perda.
 
-          Código-fonte e telemetria privados. O inventário público contém apenas caminhos relativos, tamanhos e hashes dos arquivos distribuídos. Sem certificado público novo: avisos do Windows podem permanecer. Estimativas GPS não medem comandos de freio/acelerador. Wi-Fi confirmado pelo usuário no SOLO 2; envio de pistas/configuração continua pelo Race Studio.
+          A versão 0.7.3 precisa de uma atualização manual pelo botão existente para receber a busca automática ao abrir. Pacote por arquivos para bases compatíveis desde 0.7.2; sem base compatível, usa completo. Arquivos alterados são baixados inteiros; motor igual é preservado. Sem certificado público novo: avisos do Windows podem permanecer. SOLO 2 Wi-Fi continua; envio de traçados/configuração segue pelo Race Studio.
 
-          Para instalar pela primeira vez, baixe Bin-Race-3-Setup-0.7.3.exe. Pacotes Update são usados pelo aplicativo; o catálogo JSON não é um instalador.
+          Para a primeira instalação, baixe Bin-Race-3-Setup-0.7.4.exe. Pacotes Update são usados pelo aplicativo; o catálogo JSON não é um instalador. Código-fonte e arquivos de telemetria permanecem privados.
           NOTES
           gh release create "v$APP_VERSION" Bin-Race-3-*.exe Bin-Race-3-Update-*.json Bin-Race-3-SHA256SUMS.txt --repo "$GH_REPO" --title "Bin Race 3 $APP_VERSION" --notes-file notes.md
