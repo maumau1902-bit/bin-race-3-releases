@@ -66,22 +66,16 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           cat > notes.md <<'NOTES'
-          Bin Race 3 0.8.0 — zoom, setores e ferramentas de treino.
+          Bin Race 3 0.8.1 — zoom livre no traçado durante o Play.
 
-          Zoom por curva/setor no mapa e nos gráficos de velocidade/gap, com limites comuns e extremos interpolados. Mapa de ganhos/perdas por setor entre as voltas A/B: verde A ganha, coral A perde, cinza diferença pequena. Não representa o acumulado.
+          A 0.8.0 oferecia ampliação pelo seletor Trecho em foco. Esta atualização acrescenta controles no próprio mapa: lupas +/−, roda do mouse para ampliar no ponto apontado, arrastar para mover e Pista inteira para restaurar o enquadramento. Essas ações mantêm o replay rodando e preservam seu relógio. Um clique simples continua posicionando o replay; arrastar não é confundido com esse clique.
 
-          Editor simples para renomear, posicionar limites no mapa ou por percentual, dividir/unir, desfazer e restaurar o automático. Aplica somente após revisão; mesma divisão para as voltas alinhadas. A chegada permanece fixa. Edição da ideal respeita a base escolhida e invalida a confirmação e planos anteriores. Setores compostos não recebem eventos de curva inventados.
+          Com foco no mapa: +/− ampliam/reduzem, setas movem e 0 restaura a pista. Pista inteira também limpa o foco de setor. Os controles aparecem no mapa do replay e nas demais visualizações que usam esse traçado, incluindo o editor de setores. Mantém os controles acessíveis em notebooks com pouca altura.
 
-          Em Replay e setores > Treino: consistência por arquivo (reunir só mediante escolha), média, mediana, desvio padrão populacional, amplitude e percentis; ranking de N melhores voltas e N melhores passagens por setor, com origem e seleção explícita. Mantém seleção avulsa sem limite fixo.
+          O editor já existente continua em Replay e setores > Replay > Editar setores, acima do mapa, ao lado de Trecho em foco. Consistência, melhores N, backup/PDF, vídeo, rolling lap e seleção explícita da ideal permanecem. A ampliação usa as amostras existentes; não altera a precisão dos dados GPS registrados.
 
-          Rolling lap: melhor janela contínua começando nos limites dos setores, usando final de uma volta + início da seguinte da mesma gravação. Exige ambas marcadas, relógio e GPS contínuos. Inclui as voltas registradas como candidatas; não une arquivos/dias nem melhores setores soltos. Não é um novo recorde oficial nem busca contínua em todos os pontos GPS possíveis.
+          Atualização incremental para bases compatíveis, com verificação de integridade, preparação, recuperação e reabertura automática. Código e telemetria permanecem privados. Sem certificado público novo; avisos do Windows podem permanecer.
 
-          Minhas sessões > Backup e restaurar: exporta dados importados, identificação e preferências das sessões marcadas. Verifica SHA-256 e valida registros antes da revisão. Restauração em transação aditiva: cria cópias com IDs novos, sem limpar/substituir sessões existentes. Não inclui os arquivos originais XRK/XRZ nem vídeos. Limite de 256 MB por backup; divida a seleção se necessário.
-
-          PDF nativo no Windows: comparação A/B, ideal confirmada e plano gerado manualmente, com origens, tabelas, observações e limites da análise. Vídeo local MP4 H.264/WebM com alinhamento manual quadro/cursor, reprodução e busca sincronizadas com o mapa. O arquivo é lido em intervalos, sem carregar o vídeo todo na memória. Precisa reabrir o vídeo ao voltar à tela; nome/deslocamento podem ser guardados, sem caminho pessoal no backup.
-
-          Biblioteca, replay multi-voltas, grupos A/B, plano educativo local e atualização incremental permanecem. GPS não mede freio/acelerador nem comprova causa de perda; ideal e meta extra continuam distintas. Código-fonte e telemetria permanecem privados. SOLO 2 Wi-Fi e envio via Race Studio mantidos. Sem certificado público novo; avisos do Windows podem permanecer.
-
-          Para a primeira instalação, baixe Bin-Race-3-Setup-0.8.0.exe. Pacotes Update são usados pelo aplicativo; o catálogo JSON não é um instalador. Código-fonte e arquivos de telemetria permanecem privados.
+          Para a primeira instalação, baixe Bin-Race-3-Setup-0.8.1.exe. Pacotes Update são usados pelo aplicativo; o catálogo JSON não é um instalador. Código-fonte e arquivos de telemetria permanecem privados.
           NOTES
           gh release create "v$APP_VERSION" Bin-Race-3-*.exe Bin-Race-3-Update-*.json Bin-Race-3-SHA256SUMS.txt --repo "$GH_REPO" --title "Bin Race 3 $APP_VERSION" --notes-file notes.md
