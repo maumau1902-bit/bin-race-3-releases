@@ -66,11 +66,13 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           cat > notes.md <<'NOTES'
-          Bin Race 3 0.7.2 — Windows 10/11 de 64 bits.
+          Bin Race 3 0.7.3 — Windows 10/11 de 64 bits.
+
+          Biblioteca de sessões: a importação guarda o treino no banco local e pede nome/piloto para abrir. Organizar depois mantém o rascunho identificado como pendente. Minhas sessões permite buscar por nome, piloto, moto, data, comentários ou arquivo e abrir sem localizar o original novamente. Limpar análise só fecha a área; apenas Remover sessão exclui do banco. Falhas de gravação ficam explícitas e permitem tentar salvar novamente.
 
           Novo atualizador por arquivos. A publicação gera inventário com SHA-256 e pacotes menores para até três versões anteriores compatíveis. O app escolhe o pacote adequado, confere a instalação e baixa somente arquivos alterados/novos; arquivos antigos removidos da distribuição são tratados pelo pacote. O motor não é reenviado quando permanece igual.
 
-          Esta versão introduz o mecanismo. Versões 0.7.1 e anteriores ainda baixam o instalador completo uma vez para recebê-lo. As próximas publicações terão pacotes incrementais a partir da 0.7.2. Sem pacote compatível ou com arquivos de base diferentes, o app usa o completo; caminhos irregulares ou conflito com arquivo pessoal bloqueiam o processo.
+          O mecanismo foi introduzido na 0.7.2. Versões 0.7.1 e anteriores ainda baixam o instalador completo uma vez para recebê-lo. Esta publicação oferece pacote incremental a partir da 0.7.2. Sem pacote compatível ou com arquivos de base diferentes, o app usa o completo; caminhos irregulares ou conflito com arquivo pessoal bloqueiam o processo.
 
           Preparação com app aberto, substituição com app fechado, SHA-256 nativo antes/depois, recuperação e reabertura automática. Os dados de treino permanecem no perfil local. Um arquivo alterado é baixado inteiro, não apenas seus bytes diferentes; o app.asar concentra o código e é pequeno comparado ao motor Electron.
 
@@ -78,6 +80,6 @@ jobs:
 
           Código-fonte e telemetria privados. O inventário público contém apenas caminhos relativos, tamanhos e hashes dos arquivos distribuídos. Sem certificado público novo: avisos do Windows podem permanecer. Estimativas GPS não medem comandos de freio/acelerador. Wi-Fi confirmado pelo usuário no SOLO 2; envio de pistas/configuração continua pelo Race Studio.
 
-          Para instalar pela primeira vez, baixe Bin-Race-3-Setup-0.7.2.exe. Pacotes Update são usados pelo aplicativo; o catálogo JSON não é um instalador.
+          Para instalar pela primeira vez, baixe Bin-Race-3-Setup-0.7.3.exe. Pacotes Update são usados pelo aplicativo; o catálogo JSON não é um instalador.
           NOTES
           gh release create "v$APP_VERSION" Bin-Race-3-*.exe Bin-Race-3-Update-*.json Bin-Race-3-SHA256SUMS.txt --repo "$GH_REPO" --title "Bin Race 3 $APP_VERSION" --notes-file notes.md
