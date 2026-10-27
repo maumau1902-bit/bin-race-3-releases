@@ -66,20 +66,22 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           cat > notes.md <<'NOTES'
-          Bin Race 3 0.7.4 — atualização ao abrir, seleção explícita e análise de treino.
+          Bin Race 3 0.8.0 — zoom, setores e ferramentas de treino.
 
-          Busca atualizações em segundo plano ao abrir o aplicativo instalado. Quando houver versão nova, mostra as mudanças e oferece Atualizar agora ou Agora não. Não baixa antes do aceite, aguarda outras janelas e funciona offline. Ao adiar, oferece novamente na próxima abertura. Mantém atualização incremental, verificação SHA-256, preparação, substituição, recuperação e reabertura automática.
+          Zoom por curva/setor no mapa e nos gráficos de velocidade/gap, com limites comuns e extremos interpolados. Mapa de ganhos/perdas por setor entre as voltas A/B: verde A ganha, coral A perde, cinza diferença pequena. Não representa o acumulado.
 
-          Volta ideal em etapas: escolha manualmente sessões e voltas, defina a base GPS e confirme o cálculo. O conjunto começa vazio a cada reabertura da área; a seleção A/B não inclui arquivos na ideal. Resultados, plano manual e meta extra ficam separados. O plano usa os melhores setores escolhidos, com origem, diferenças e acumulados; navegar entre suas etapas preserva o plano enquanto os dados não mudarem.
+          Editor simples para renomear, posicionar limites no mapa ou por percentual, dividir/unir, desfazer e restaurar o automático. Aplica somente após revisão; mesma divisão para as voltas alinhadas. A chegada permanece fixa. Edição da ideal respeita a base escolhida e invalida a confirmação e planos anteriores. Setores compostos não recebem eventos de curva inventados.
 
-          Em Replay e setores, a aba Grupos A/B permite escolher baterias de sessões, comparar a melhor volta real de cada grupo com gaps por setor/acumulados e abrir o par no relatório por curva. Não há inclusão automática por nome ou dia. Comparação livre de voltas, inclusive entre arquivos, continua disponível.
+          Em Replay e setores > Treino: consistência por arquivo (reunir só mediante escolha), média, mediana, desvio padrão populacional, amplitude e percentis; ranking de N melhores voltas e N melhores passagens por setor, com origem e seleção explícita. Mantém seleção avulsa sem limite fixo.
 
-          Layout para notebooks com controles acessíveis e listas/tabelas em áreas internas. Biblioteca destaca melhor volta, piloto e data, com ordenação por tempo ou dia. Importações continuam exigindo identificação; limpar análise mantém os treinos no banco local.
+          Rolling lap: melhor janela contínua começando nos limites dos setores, usando final de uma volta + início da seguinte da mesma gravação. Exige ambas marcadas, relógio e GPS contínuos. Inclui as voltas registradas como candidatas; não une arquivos/dias nem melhores setores soltos. Não é um novo recorde oficial nem busca contínua em todos os pontos GPS possíveis.
 
-          Plano e relatório oferecem um cenário local de retomada antecipada quando os dados permitem. Aceleração constante e outras hipóteses são mostradas; o resultado não é previsão nem modifica a ideal observada. Sem integração com IA externa ou envio de telemetria. GPS não mede freio/acelerador nem comprova causa da perda.
+          Minhas sessões > Backup e restaurar: exporta dados importados, identificação e preferências das sessões marcadas. Verifica SHA-256 e valida registros antes da revisão. Restauração em transação aditiva: cria cópias com IDs novos, sem limpar/substituir sessões existentes. Não inclui os arquivos originais XRK/XRZ nem vídeos. Limite de 256 MB por backup; divida a seleção se necessário.
 
-          A versão 0.7.3 precisa de uma atualização manual pelo botão existente para receber a busca automática ao abrir. Pacote por arquivos para bases compatíveis desde 0.7.2; sem base compatível, usa completo. Arquivos alterados são baixados inteiros; motor igual é preservado. Sem certificado público novo: avisos do Windows podem permanecer. SOLO 2 Wi-Fi continua; envio de traçados/configuração segue pelo Race Studio.
+          PDF nativo no Windows: comparação A/B, ideal confirmada e plano gerado manualmente, com origens, tabelas, observações e limites da análise. Vídeo local MP4 H.264/WebM com alinhamento manual quadro/cursor, reprodução e busca sincronizadas com o mapa. O arquivo é lido em intervalos, sem carregar o vídeo todo na memória. Precisa reabrir o vídeo ao voltar à tela; nome/deslocamento podem ser guardados, sem caminho pessoal no backup.
 
-          Para a primeira instalação, baixe Bin-Race-3-Setup-0.7.4.exe. Pacotes Update são usados pelo aplicativo; o catálogo JSON não é um instalador. Código-fonte e arquivos de telemetria permanecem privados.
+          Biblioteca, replay multi-voltas, grupos A/B, plano educativo local e atualização incremental permanecem. GPS não mede freio/acelerador nem comprova causa de perda; ideal e meta extra continuam distintas. Código-fonte e telemetria permanecem privados. SOLO 2 Wi-Fi e envio via Race Studio mantidos. Sem certificado público novo; avisos do Windows podem permanecer.
+
+          Para a primeira instalação, baixe Bin-Race-3-Setup-0.8.0.exe. Pacotes Update são usados pelo aplicativo; o catálogo JSON não é um instalador. Código-fonte e arquivos de telemetria permanecem privados.
           NOTES
           gh release create "v$APP_VERSION" Bin-Race-3-*.exe Bin-Race-3-Update-*.json Bin-Race-3-SHA256SUMS.txt --repo "$GH_REPO" --title "Bin Race 3 $APP_VERSION" --notes-file notes.md
