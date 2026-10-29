@@ -27,11 +27,11 @@ jobs:
           inputs=json.load(open(os.environ['GITHUB_EVENT_PATH']))['inputs']
           version=inputs['version'];bundle=json.loads(inputs['asset_bundle'])
           if not re.fullmatch(r'(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)',version):raise SystemExit('Versão inválida.')
-          if not isinstance(bundle,list) or not 3<=len(bundle)<=6:raise SystemExit('Lista de pacotes inválida.')
+          if not isinstance(bundle,list) or not 3<=len(bundle)<=9:raise SystemExit('Lista de pacotes inválida.')
           names=set();total=0
           for item in bundle:
             name=item['name'];url=item['url'];print(f'::add-mask::{url}')
-            valid=name in (f'Bin-Race-3-Setup-{version}.exe',f'Bin-Race-3-Update-{version}.json','Bin-Race-3-SHA256SUMS.txt') or re.fullmatch(r'Bin-Race-3-Update-'+re.escape(version)+r'-from-\d+\.\d+\.\d+\.exe',name)
+            valid=name in (f'Bin-Race-3-Setup-{version}.exe',f'Bin-Race-3-Update-{version}.json','Bin-Race-3-SHA256SUMS.txt',f'Bin-Race-3-{version}-macOS-arm64.dmg',f'Bin-Race-3-{version}-macOS-x64.dmg','Bin-Race-3-macOS-SHA256SUMS.txt') or re.fullmatch(r'Bin-Race-3-Update-'+re.escape(version)+r'-from-\d+\.\d+\.\d+\.exe',name)
             if not valid or name in names or not re.fullmatch('[a-f0-9]{64}',item['sha256']):raise SystemExit('Nome/hash inválido.')
             names.add(name);size=item['size']
             if not isinstance(size,int) or not 0<size<=2*1024**3:raise SystemExit('Tamanho inválido.')
@@ -40,6 +40,8 @@ jobs:
             parsed=urllib.parse.urlsplit(url)
             if parsed.scheme!='https' or parsed.hostname not in ('release-assets.githubusercontent.com','objects.githubusercontent.com') or parsed.username or parsed.password:raise SystemExit('Origem não autorizada.')
           if not {f'Bin-Race-3-Setup-{version}.exe',f'Bin-Race-3-Update-{version}.json','Bin-Race-3-SHA256SUMS.txt'}<=names:raise SystemExit('Faltam arquivos obrigatórios.')
+          mac_names={f'Bin-Race-3-{version}-macOS-arm64.dmg',f'Bin-Race-3-{version}-macOS-x64.dmg','Bin-Race-3-macOS-SHA256SUMS.txt'}
+          if names & mac_names and not mac_names<=names:raise SystemExit('Faltam pacotes macOS.')
           for item in bundle:
             digest=hashlib.sha256();received=0;prefix=b''
             try:
@@ -57,7 +59,10 @@ jobs:
             if received!=item['size'] or digest.hexdigest()!=item['sha256'] or (item['name'].endswith('.exe') and prefix!=b'MZ'):raise SystemExit('Integridade inválida.')
             print(f"Verificado: {item['name']}, {received} bytes.")
           sums={line.split('  ',1)[1]:line.split('  ',1)[0] for line in open('Bin-Race-3-SHA256SUMS.txt').read().splitlines()}
-          if sums!={item['name']:item['sha256'] for item in bundle if item['name']!='Bin-Race-3-SHA256SUMS.txt'}:raise SystemExit('Inventário de hashes divergente.')
+          if sums!={item['name']:item['sha256'] for item in bundle if item['name']!='Bin-Race-3-SHA256SUMS.txt' and item['name'] not in mac_names}:raise SystemExit('Inventário Windows divergente.')
+          if mac_names<=names:
+            mac_sums={line.split('  ',1)[1]:line.split('  ',1)[0] for line in open('Bin-Race-3-macOS-SHA256SUMS.txt').read().splitlines()}
+            if mac_sums!={item['name']:item['sha256'] for item in bundle if item['name'] in mac_names and item['name'].endswith('.dmg')}:raise SystemExit('Inventário macOS divergente.')
           PY
       - name: Publicar arquivos de atualização
         env:
@@ -66,28 +71,23 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           cat > notes.md <<'NOTES'
-          Bin Race 3 0.10.0 — arquivos organizados, validade independente e SOLO 1.
+          Bin Race 3 0.11.0 — Windows e macOS, com downloads separados.
 
-          O instalador e o aplicativo criam Documentos/Bin Race 3/Tracks usando a pasta Documentos configurada no Windows, inclusive redirecionamento. Novas importações para a biblioteca copiam os originais e auxiliares de mesmo nome para uma subpasta identificada pelo nome e conteúdo, sem sobrescrever originais diferentes. Minhas sessões > Pasta Tracks abre o local; downloads Wi-Fi sugerem esse destino. Limpeza, atualização e desinstalação preservam esses arquivos. Originais de importações antigas precisam ser reimportados se ainda não houver cópia; não são reconstruídos do banco.
+          **Escolha o instalador:**
+          - Windows 10/11 de 64 bits: Bin-Race-3-Setup-0.11.0.exe.
+          - Mac com chip Apple (M1/M2/M3/M4 ou posterior compatível): Bin-Race-3-0.11.0-macOS-arm64.dmg.
+          - Mac Intel: Bin-Race-3-0.11.0-macOS-x64.dmg.
 
-          Validade do tempo > Importar arquivos para verificar abre um arquivo temporário sem salvar na biblioteca, exigir organização ou alterar sessão/volta da análise principal. Selecione a volta ou todas as voltas e clique em Verificar tempo. Importar referência abre outro arquivo temporário; a referência e sua volta são escolhidas manualmente. PDF individual/sessão, evidências e setores preservados. Fechar arquivos temporários ou sair da aba descarta apenas a verificação temporária. Cancelar/erro mantém o arquivo anterior identificado.
+          No Mac, abra a imagem e arraste Bin Race 3 para Aplicativos; ejete a imagem e abra pela pasta Aplicativos/Launchpad. Requer macOS 12 Monterey ou mais recente, conforme o mínimo declarado pelo motor. Os ensaios nativos foram em macOS 15. Veja o chip e o sistema em Apple > Sobre Este Mac. A edição Mac ainda não tem Developer ID/notarização da Apple: o sistema pode bloquear a primeira abertura; use somente o fluxo de confirmação do próprio macOS se confiar no download oficial. Não desative as proteções. Políticas de computadores gerenciados podem impedir esta edição de testes.
 
-          SOLO 1: leitor DRK RDX v2 limitado à configuração observada nos arquivos enviados. Confere estrutura, somas dos metadados/marcos, tamanhos, calibração e flags de parcial. DRK sozinho fornece tempos e velocidade a 10 Hz; o mapa precisa do RRK correspondente. Windows encontra auxiliares de mesmo nome na mesma pasta; no navegador/arrastar selecione DRK e RRK juntos. RRK preserva instantes NSOL (~4 Hz), posições WGS84 e velocidade horizontal dos vetores GPS; pode diferir do canal DRK. Associação usa nome, período e coerência da velocidade, sem autenticar o arquivo. GPK/DAT/BAK são preservados como auxiliares, não decodificados nem tratados como novas sessões. Outras variantes podem ser recusadas.
+          Mesma base de análise: arquivos XRK/XRZ/DRK compatíveis e CSV, comparação de voltas, replay e zoom, setores, ideal/metas, consistência, biblioteca/backup, vídeo local, PDF e validade do tempo. Não exige GitHub, Codex, Node.js ou login no aplicativo. Dados ficam no computador; backup entre sistemas é manual. A pasta Documentos/Bin Race 3/Tracks é criada na primeira abertura no Mac e na instalação/abertura no Windows.
 
-          USB do SOLO 1: consulta somente os dispositivos PnP do Windows, identifica candidatos pelo nome e mostra estado/VID/PID sem números de série. Botão separado abre o Race Studio 2 instalado para baixar pelo cabo e depois importar DRK/auxiliares. A extração USB direta pelo Bin Race ainda NÃO está implementada nem validada; não houve ensaio físico do SOLO 1 nesta entrega. Não instala/substitui drivers nem envia comandos ao logger. SOLO 2 Wi-Fi preservado.
+          Atualizações: ambos consultam o canal público ao abrir. Windows mantém instalação automática, reabertura e pacotes incrementais compatíveis. Mac baixa/verifica o DMG de sua arquitetura e abre no Finder; é necessário fechar o app, substituir em Aplicativos e reabrir. Ainda não há atualização silenciosa/incremental no macOS.
 
-          Resultados de validade não certificam tempo oficial, autenticidade, ausência de corte ou fraude. GPS ausente não vira percurso inventado. Mantém zoom livre durante o Play, editor, biblioteca e atualização incremental. Código e telemetria privados; sem certificado público novo.
+          Conexões: SOLO 2 Wi-Fi já confirmado por usuário no Windows; no Mac, ainda experimental e sem ensaio físico. Autorize rede local quando o macOS solicitar. Detecção USB PnP e atalhos do Race Studio são exclusivos do Windows. Extração USB direta do SOLO 1 e envio direto de pistas/configurações continuam pendentes. Race Studio/drivers não são incluídos. DRK das variantes testadas precisa de RRK correspondente para geometria GPS.
 
-          Duração DRK refinada conferida com a API AiM Windows, preservando separadamente os marcos de aquisição. O relatório explica as duas bases e não as confunde com sobreposição GPS; discrepâncias de duração acima de 1 s e 2% da aquisição em voltas completas são destacadas para revisão. Não há escala artificial de tempos/amostras. Extensão não garante leitura de qualquer variante de firmware; canais desconhecidos/ECU e formatos não validados continuam explicitados.
+          A validade do tempo produz diagnósticos, não certificação oficial, autenticação ou prova de fraude. Preserva os tempos originais e só estima entre passagens observadas quando os dados permitem. Não inventa percurso/tempo em saltos ou cortes. Formato/firmware desconhecido pode ser recusado.
 
-          Lista temporária de vários arquivos na validade, seleção de arquivos e voltas, verificação individual/sessão/lote e PDF da lista com origem por arquivo/volta/setor e erros de leitura separados. Referência e volta escolhidas manualmente; importação ruim não descarta os arquivos bons nem os marca como tempos inválidos. O histórico completo disponível é conferido, incluindo pontos fora das janelas de volta. Sem número fixo de itens na lista; até 128 MB por seleção e 25 MB por arquivo, com novas importações em lotes.
-
-          S/F no mapa indicam as primeiras/últimas posições disponíveis, com foco nos extremos, separação e deslocamentos relativos à linha inferida. O traço rosa entre extremos é apenas uma medida, não um trajeto reconstruído. Pequenas diferenças de trajetória e incerteza GPS não são automaticamente cortes de pista.
-
-          Cálculo temporal condicional: se há GPS contínuo, duas passagens observadas pela mesma linha de referência e percurso compatível, calcula o intervalo entre cruzamentos, diferença para o tempo registrado e faixa de sensibilidade baseada na amostragem/precisão. Usa o relógio GPS quando disponível e coerente com aquisição. Não altera o tempo original e não é cronometragem oficial. GPS ausente, salto, relógios incoerentes, possível encurtamento ou associação ambígua deixam a estimativa indisponível; não inventa tempo para curvas não percorridas.
-
-          DRK com contador reiniciado recebe identificadores pela ordem no arquivo; número original e bateria/grupo ficam preservados no relatório. Histórico, bases temporais e identificadores também são preservados no backup da biblioteca.
-
-          Para primeira instalação, baixe Bin-Race-3-Setup-0.10.0.exe. Pacotes Update são usados pelo aplicativo; JSON é catálogo, não instalador.
+          Arquivos Update são usados pelo atualizador Windows. JSON e SHA256SUMS são arquivos de apoio. O código de desenvolvimento e a telemetria permanecem privados. Repositório privado não impede engenharia reversa do aplicativo distribuído.
           NOTES
-          gh release create "v$APP_VERSION" Bin-Race-3-*.exe Bin-Race-3-Update-*.json Bin-Race-3-SHA256SUMS.txt --repo "$GH_REPO" --title "Bin Race 3 $APP_VERSION" --notes-file notes.md
+          gh release create "v$APP_VERSION" Bin-Race-3-*.exe Bin-Race-3-*.dmg Bin-Race-3-Update-*.json Bin-Race-3-SHA256SUMS.txt Bin-Race-3-macOS-SHA256SUMS.txt --repo "$GH_REPO" --title "Bin Race 3 $APP_VERSION" --notes-file notes.md
