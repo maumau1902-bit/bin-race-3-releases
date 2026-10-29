@@ -27,11 +27,11 @@ jobs:
           inputs=json.load(open(os.environ['GITHUB_EVENT_PATH']))['inputs']
           version=inputs['version'];bundle=json.loads(inputs['asset_bundle'])
           if not re.fullmatch(r'(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)',version):raise SystemExit('Versão inválida.')
-          if not isinstance(bundle,list) or not 3<=len(bundle)<=9:raise SystemExit('Lista de pacotes inválida.')
+          if not isinstance(bundle,list) or not 3<=len(bundle)<=8:raise SystemExit('Lista de pacotes inválida.')
           names=set();total=0
           for item in bundle:
             name=item['name'];url=item['url'];print(f'::add-mask::{url}')
-            valid=name in (f'Bin-Race-3-Setup-{version}.exe',f'Bin-Race-3-Update-{version}.json','Bin-Race-3-SHA256SUMS.txt',f'Bin-Race-3-{version}-macOS-arm64.dmg',f'Bin-Race-3-{version}-macOS-x64.dmg','Bin-Race-3-macOS-SHA256SUMS.txt') or re.fullmatch(r'Bin-Race-3-Update-'+re.escape(version)+r'-from-\d+\.\d+\.\d+\.exe',name)
+            valid=name in (f'Bin-Race-3-Setup-{version}.exe',f'Bin-Race-3-Update-{version}.json','Bin-Race-3-SHA256SUMS.txt',f'Bin-Race-3-{version}-macOS-universal.dmg','Bin-Race-3-macOS-SHA256SUMS.txt') or re.fullmatch(r'Bin-Race-3-Update-'+re.escape(version)+r'-from-\d+\.\d+\.\d+\.exe',name)
             if not valid or name in names or not re.fullmatch('[a-f0-9]{64}',item['sha256']):raise SystemExit('Nome/hash inválido.')
             names.add(name);size=item['size']
             if not isinstance(size,int) or not 0<size<=2*1024**3:raise SystemExit('Tamanho inválido.')
@@ -40,7 +40,7 @@ jobs:
             parsed=urllib.parse.urlsplit(url)
             if parsed.scheme!='https' or parsed.hostname not in ('release-assets.githubusercontent.com','objects.githubusercontent.com') or parsed.username or parsed.password:raise SystemExit('Origem não autorizada.')
           if not {f'Bin-Race-3-Setup-{version}.exe',f'Bin-Race-3-Update-{version}.json','Bin-Race-3-SHA256SUMS.txt'}<=names:raise SystemExit('Faltam arquivos obrigatórios.')
-          mac_names={f'Bin-Race-3-{version}-macOS-arm64.dmg',f'Bin-Race-3-{version}-macOS-x64.dmg','Bin-Race-3-macOS-SHA256SUMS.txt'}
+          mac_names={f'Bin-Race-3-{version}-macOS-universal.dmg','Bin-Race-3-macOS-SHA256SUMS.txt'}
           if names & mac_names and not mac_names<=names:raise SystemExit('Faltam pacotes macOS.')
           for item in bundle:
             digest=hashlib.sha256();received=0;prefix=b''
@@ -75,14 +75,13 @@ jobs:
 
           **Escolha o instalador:**
           - Windows 10/11 de 64 bits: Bin-Race-3-Setup-0.11.0.exe.
-          - Mac com chip Apple (M1/M2/M3/M4 ou posterior compatível): Bin-Race-3-0.11.0-macOS-arm64.dmg.
-          - Mac Intel: Bin-Race-3-0.11.0-macOS-x64.dmg.
+          - Mac Intel ou chip Apple: Bin-Race-3-0.11.0-macOS-universal.dmg. Um único download para ambos; o macOS escolhe a arquitetura nativa, sem baixar outro pacote.
 
-          No Mac, abra a imagem e arraste Bin Race 3 para Aplicativos; ejete a imagem e abra pela pasta Aplicativos/Launchpad. Requer macOS 12 Monterey ou mais recente, conforme o mínimo declarado pelo motor. Os ensaios nativos foram em macOS 15. Veja o chip e o sistema em Apple > Sobre Este Mac. A edição Mac ainda não tem Developer ID/notarização da Apple: o sistema pode bloquear a primeira abertura; use somente o fluxo de confirmação do próprio macOS se confiar no download oficial. Não desative as proteções. Políticas de computadores gerenciados podem impedir esta edição de testes.
+          No Mac, abra a imagem e arraste Bin Race 3 para Aplicativos; ejete a imagem e abra pela pasta Aplicativos/Launchpad. Requer macOS 12 Monterey ou mais recente, conforme o mínimo declarado pelo motor. Os ensaios nativos foram em macOS 15. Veja a versão do sistema em Apple > Sobre Este Mac. Não é necessário identificar o processador para baixar. A edição Mac ainda não tem Developer ID/notarização da Apple: o sistema pode bloquear a primeira abertura; use somente o fluxo de confirmação do próprio macOS se confiar no download oficial. Não desative as proteções. Políticas de computadores gerenciados podem impedir esta edição de testes.
 
           Mesma base de análise: arquivos XRK/XRZ/DRK compatíveis e CSV, comparação de voltas, replay e zoom, setores, ideal/metas, consistência, biblioteca/backup, vídeo local, PDF e validade do tempo. Não exige GitHub, Codex, Node.js ou login no aplicativo. Dados ficam no computador; backup entre sistemas é manual. A pasta Documentos/Bin Race 3/Tracks é criada na primeira abertura no Mac e na instalação/abertura no Windows.
 
-          Atualizações: ambos consultam o canal público ao abrir. Windows mantém instalação automática, reabertura e pacotes incrementais compatíveis. Mac baixa/verifica o DMG de sua arquitetura e abre no Finder; é necessário fechar o app, substituir em Aplicativos e reabrir. Ainda não há atualização silenciosa/incremental no macOS.
+          Atualizações: ambos consultam o canal público ao abrir. Windows mantém instalação automática, reabertura e pacotes incrementais compatíveis. Mac baixa/verifica o mesmo DMG Universal em Intel e Apple Silicon e abre no Finder; é necessário fechar o app, substituir em Aplicativos e reabrir. Ainda não há atualização silenciosa/incremental no macOS.
 
           Conexões: SOLO 2 Wi-Fi já confirmado por usuário no Windows; no Mac, ainda experimental e sem ensaio físico. Autorize rede local quando o macOS solicitar. Detecção USB PnP e atalhos do Race Studio são exclusivos do Windows. Extração USB direta do SOLO 1 e envio direto de pistas/configurações continuam pendentes. Race Studio/drivers não são incluídos. DRK das variantes testadas precisa de RRK correspondente para geometria GPS.
 
