@@ -71,20 +71,18 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           cat > notes.md <<'NOTES'
-          Bin Race 3 0.11.1 — revisão Wi-Fi e atualização automática no Mac.
+          Bin Race 3 0.11.2 — relatório por curva e velocidades.
 
-          **Downloads separados:** Windows 10/11 x64 usa Bin-Race-3-Setup-0.11.1.exe. Mac Intel e chip Apple usam o mesmo Bin-Race-3-0.11.1-macOS-universal.dmg; ele contém somente versões Mac, sem Windows. O sistema escolhe a arquitetura nativa. Mac requer macOS 12 ou posterior, com ensaios desta edição no macOS 15 nos dois processadores. Não exige GitHub, Codex, Node.js ou login no programa.
+          A/B identificados pelo tempo da volta escolhida, piloto e número da volta. Comparação por curva com desaceleração e retomada em metros antes/depois, velocidades e tempo ganho/perdido em cada parte do setor. Pontos para revisar citam as diferenças observadas.
 
-          **Wi-Fi revisado:** seleção de Conexão do computador para situações com VPN/cabo/vários adaptadores; preferência pela sub-rede mais específica e escolha explícita em empate. Erros no envio UDP e depois do bind passam à operação; não são tratados como ausência de aparelho ou download concluído. Timeout TCP rejeita sem depender do fechamento pelo sistema. Mac abre configurações compatíveis com Monterey e sistemas novos. Permissões/rede/firewall têm orientação; nenhuma proteção é desativada.
+          Velocidade máxima e mínima da volta ou setor em Replay, Gráficos, Setores e Detalhe A/B. Relatório distingue máxima/mínima do setor completo da mínima dentro da curva. Valores GPS em km/h; não medem freio ou acelerador.
 
-          Testes usam módulos do aplicativo empacotado com sockets UDP/TCP nativos e SOLO virtual no mesmo host, com endpoints/portas remapeados. Conferem descoberta, cache/lista UTF16, download por blocos, conteúdo/hash, importação XRK, corrupção, cancelamento e preservação de arquivos. Isso NÃO é ensaio de rádio, broadcast físico, firmware ou consentimento TCC do SOLO real. Descoberta/download físicos foram confirmados por usuário apenas no Windows. O Wi-Fi Mac continua experimental até teste com aparelho.
+          Editar/organizar sessão: formulário compacto com todos os campos visíveis em janelas menores. Clicar fora não fecha a janela nem perde o preenchimento.
 
-          **Mac automático:** após aceitar, baixa/verifica DMG completo, prepara cópia antes de fechar, confere identidade/versão/assinatura técnica, aguarda auxiliar, substitui com backup e reabre via LaunchServices. A nova janela confirma abertura; falha de lançamento tenta restaurar/reabrir a versão anterior. Biblioteca/Tracks ficam fora do app. Sem permissão para escrever na pasta ou se aberto do DMG, mantém o programa aberto e orienta instalação manual. Não altera Gatekeeper/quarentena/firewall nem usa elevação de privilégio. Sem Developer ID/notarização, o sistema ainda pode pedir aprovação ou bloquear; assinatura técnica ad-hoc não identifica editor verificado. Mac ainda baixa pacote completo, sem delta.
+          Downloads separados: Windows 10/11 x64 usa Bin-Race-3-Setup-0.11.2.exe. Mac Intel e Apple Silicon usam o mesmo Bin-Race-3-0.11.2-macOS-universal.dmg (macOS 12+). Sem GitHub/Codex/login para usar. Biblioteca e Tracks preservados.
 
-          **Transição:** quem usa Mac 0.11.0 precisa instalar 0.11.1 uma vez pelo Finder para adquirir o mecanismo automático. No Windows, o atualizador existente instala normalmente, com pacote parcial quando compatível. Ambos verificam ao abrir ou pelo botão; mudanças só chegam após publicação, sem notificação instantânea enquanto o app permanece aberto.
+          Atualize pelo botão Atualizações ou ao reabrir o app. Windows usa pacote parcial quando compatível; Mac a partir da 0.11.1 tem atualização automática com pacote completo. Mac 0.11.0 precisa de instalação manual para adquirir esse mecanismo.
 
-          Mantém análises/seleção manual, replay/zoom/setores, ideal/metas, biblioteca/backup, relatórios/PDF/vídeo e validade da 0.11.0. Tempos originais preservados; diagnósticos não certificam tempo, autenticidade ou fraude. Extração direta SOLO 1 USB e envio direto de pistas/configurações continuam pendentes. PnP USB/atalhos Race Studio são exclusivos Windows. DRK compatível precisa do RRK correspondente para geometria GPS.
-
-          Para primeira instalação, abra o Setup Windows ou arraste o app do DMG Mac para Aplicativos, ejete e abra pelo local instalado. Pacotes Update, catálogo e SHA são apoio ao atualizador Windows. Código de desenvolvimento permanece privado; runtime distribuído pode ser examinado. Dados pessoais não são publicados.
+          Mantidos os limites existentes: sem novo certificado Windows ou Developer ID/notarização Apple. Wi-Fi físico Mac permanece experimental. Diagnósticos GPS não certificam tempo oficial.
           NOTES
           gh release create "v$APP_VERSION" Bin-Race-3-*.exe Bin-Race-3-*.dmg Bin-Race-3-Update-*.json Bin-Race-3-SHA256SUMS.txt Bin-Race-3-macOS-SHA256SUMS.txt --repo "$GH_REPO" --title "Bin Race 3 $APP_VERSION" --notes-file notes.md
