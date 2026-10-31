@@ -71,7 +71,11 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           cat > notes.md <<'NOTES'
-          Bin Race 3 __VERSION__ — importar várias sessões do computador.
+          Bin Race 3 __VERSION__ — melhor volta visível em Minhas sessões.
+
+          A biblioteca agora mostra cada treino em uma lista com rolagem, sem comprimir ou cortar os cartões. A melhor volta completa fica em destaque, com o número da volta, o nome e o arquivo de origem.
+
+          Ordene do menor para o maior tempo ou do maior para o menor. O campo Melhor volta até filtra pelo tempo desejado, como 1:00.000. Editar e Excluir ficam visíveis; a melhor volta também aparece na edição e na confirmação da remoção. É possível salvar a identificação sem sair da biblioteca. Filtrar não apaga treinos; excluir continua pedindo confirmação e preservando o original.
 
           Agora você pode selecionar vários arquivos no computador com Ctrl + clique, Shift ou Ctrl + A e importar as sessões de uma vez. No Mac, use Cmd + clique ou Shift. Cada treino fica separado em Minhas sessões; use Organizar e abrir para confirmar nome e piloto. Arrastar vários arquivos também funciona. Arquivos recusados são informados sem interromper os demais; DRK mantém os auxiliares de mesmo nome.
 
