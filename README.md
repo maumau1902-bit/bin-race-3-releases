@@ -4,10 +4,10 @@ Não precisa de conta GitHub para baixar, instalar ou usar o aplicativo.
 
 [Ver a versão mais recente e as novidades](https://github.com/maumau1902-bit/bin-race-3-releases/releases/latest)
 
-| Seu computador | Instalador 0.12.0 |
+| Seu computador | Instalador 0.12.2 |
 | --- | --- |
-| Windows 10 ou 11, 64 bits | [Baixar para Windows](https://github.com/maumau1902-bit/bin-race-3-releases/releases/download/v0.12.0/Bin-Race-3-Setup-0.12.0.exe) |
-| Mac Intel ou com chip Apple (M1/M2/M3/M4 ou posterior compatível) | [Baixar para Mac — Universal](https://github.com/maumau1902-bit/bin-race-3-releases/releases/download/v0.12.0/Bin-Race-3-0.12.0-macOS-universal.dmg) |
+| Windows 10 ou 11, 64 bits | [Baixar para Windows](https://github.com/maumau1902-bit/bin-race-3-releases/releases/download/v0.12.2/Bin-Race-3-Setup-0.12.2.exe) |
+| Mac Intel ou com chip Apple (M1/M2/M3/M4 ou posterior compatível) | [Baixar para Mac — Universal](https://github.com/maumau1902-bit/bin-race-3-releases/releases/download/v0.12.2/Bin-Race-3-0.12.2-macOS-universal.dmg) |
 
 No Mac, não precisa identificar o processador: o mesmo download inclui código
 nativo para Intel e Apple Silicon; o sistema escolhe automaticamente, sem outro
@@ -56,6 +56,12 @@ Este repositório contém somente pacotes, hashes, instruções e o fluxo públi
 de publicação. O código de desenvolvimento permanece privado; dados pessoais
 de telemetria não são publicados. Repositório privado não impede engenharia
 reversa do aplicativo distribuído.
+
+## Novidades 0.12.2
+
+Importe várias sessões de uma vez: em Importar sessão, selecione arquivos com Ctrl + clique, Shift ou Ctrl + A no Windows; no Mac, use Cmd + clique ou Shift. Cada treino fica separado em Minhas sessões. Use Organizar e abrir para identificar nome e piloto. Arrastar vários arquivos também funciona, com erros informados por arquivo sem interromper os demais.
+
+O botão Salvar informa os campos obrigatórios pendentes e fica verde quando os dados estão completos. A atualização está disponível pelo botão Atualizações do aplicativo, com preservação da biblioteca e das preferências.
 
 ## Novidades 0.12.0
 
