@@ -71,18 +71,18 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           cat > notes.md <<'NOTES'
-          Bin Race 3 0.12.0 — evolução, backup automático e revisão geral.
+          Bin Race 3 __VERSION__ — identificação clara antes de salvar.
 
-          Mínima junto da máxima. Exportações CSV/PDF com extremos por volta/setor. CSV sem passagem inicial comprovada fica parcial; confirmação em Editar sessão → Voltas CSV. Sessões antigas são revistas conservadoramente, sem alterar tempos/amostras originais.
+          O botão Salvar fica escuro enquanto faltarem dados obrigatórios e explica exatamente o que falta, como “Falta preencher o nome do piloto”. Ao completar os dados, fica verde e permite salvar e abrir a análise.
 
-          Minhas sessões → Evolução dos treinos: seleção explícita, melhor tempo, mediana, consistência, velocidades e setores GPS. Editar sessão → Ficha do treino: pneus, pressões, clima e acerto. Notas locais por curva de piloto/professor, qualidade GPS visível e exportação das notas.
+          Tocar antes de completar destaca o campo pendente e retorna à aba Identificação quando necessário. O formulário mantém os dados digitados. Nome com letras e piloto são obrigatórios para organizar a importação; os demais campos continuam opcionais. Comportamento igual no Windows e Mac.
 
-          Backup automático em Documentos/Bin Race 3/Backups, até 10 cópias/1 GB. Restauração revisada adiciona cópias sem substituir a biblioteca. Originais permanecem em Tracks; vídeos e originais não são embutidos nos backups. Copie ambas as pastas para outro dispositivo para proteção contra falha do disco.
+          Mantém análises, comparação por curva, velocidades máxima/mínima, evolução, ficha de treino, notas, PDF/CSV, vídeo, validade dos tempos, backup automático e restauração aditiva. Biblioteca, preferências, originais em Tracks e tempos/amostras são preservados. Backups não embutem originais nem vídeos.
 
-          Importação em segundo plano, recuperação visual de erro, setores salvos antes de fechar e biblioteca paginada. Ferramenta de empacotamento atualizada e testes de regressão de interface.
+          Windows 10/11 x64: Bin-Race-3-Setup-__VERSION__.exe. Mac Intel/Apple Silicon: único Bin-Race-3-__VERSION__-macOS-universal.dmg, macOS 12+. A primeira abertura no Mac continua sujeita às permissões do sistema, sem Developer ID/notarização nesta edição. Guia no DMG e na Ajuda. Não requer GitHub/Codex/login.
 
-          Windows 10/11 x64: Bin-Race-3-Setup-0.12.0.exe. Mac Intel/Apple Silicon: único Bin-Race-3-0.12.0-macOS-universal.dmg, macOS12+. Guia de primeira abertura no DMG e Ajuda. Sem Developer ID/notarização: o macOS pode exigir Abrir Mesmo Assim em Privacidade e Segurança. Não desative proteções nem remova quarentena. Sem GitHub/Codex/login para usar.
-
-          Atualize pelo botão Atualizações. Windows usa pacote parcial quando compatível; Mac0.11.1+ permite atualização automática com pacote completo. Mac0.11.0 precisa de instalação manual. Wi-Fi físico Mac, USB direto SOLO1 e envio direto de pistas continuam pendentes de validação/implementação; GPS não certifica tempo oficial nem acionamento de freio/acelerador.
+          Atualize pelo botão Atualizações. Windows utiliza pacote parcial quando compatível; Mac baixa o pacote completo. Wi-Fi físico Mac, USB direto SOLO1 e envio direto de pistas continuam com as limitações já informadas. Não foram acrescentadas funções de conexão nativa ao site/mobile.
           NOTES
+          sed -i "s/__VERSION__/$APP_VERSION/g" notes.md
+
           gh release create "v$APP_VERSION" Bin-Race-3-*.exe Bin-Race-3-*.dmg Bin-Race-3-Update-*.json Bin-Race-3-SHA256SUMS.txt Bin-Race-3-macOS-SHA256SUMS.txt --repo "$GH_REPO" --title "Bin Race 3 $APP_VERSION" --notes-file notes.md
