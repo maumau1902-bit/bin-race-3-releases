@@ -4,10 +4,10 @@ Não precisa de conta GitHub para baixar, instalar ou usar o aplicativo.
 
 [Ver a versão mais recente e as novidades](https://github.com/maumau1902-bit/bin-race-3-releases/releases/latest)
 
-| Seu computador | Instalador 0.12.2 |
+| Seu computador | Instalador 0.12.3 |
 | --- | --- |
-| Windows 10 ou 11, 64 bits | [Baixar para Windows](https://github.com/maumau1902-bit/bin-race-3-releases/releases/download/v0.12.2/Bin-Race-3-Setup-0.12.2.exe) |
-| Mac Intel ou com chip Apple (M1/M2/M3/M4 ou posterior compatível) | [Baixar para Mac — Universal](https://github.com/maumau1902-bit/bin-race-3-releases/releases/download/v0.12.2/Bin-Race-3-0.12.2-macOS-universal.dmg) |
+| Windows 10 ou 11, 64 bits | [Baixar para Windows](https://github.com/maumau1902-bit/bin-race-3-releases/releases/download/v0.12.3/Bin-Race-3-Setup-0.12.3.exe) |
+| Mac Intel ou com chip Apple (M1/M2/M3/M4 ou posterior compatível) | [Baixar para Mac — Universal](https://github.com/maumau1902-bit/bin-race-3-releases/releases/download/v0.12.3/Bin-Race-3-0.12.3-macOS-universal.dmg) |
 
 No Mac, não precisa identificar o processador: o mesmo download inclui código
 nativo para Intel e Apple Silicon; o sistema escolhe automaticamente, sem outro
@@ -56,6 +56,12 @@ Este repositório contém somente pacotes, hashes, instruções e o fluxo públi
 de publicação. O código de desenvolvimento permanece privado; dados pessoais
 de telemetria não são publicados. Repositório privado não impede engenharia
 reversa do aplicativo distribuído.
+
+## Novidades 0.12.3
+
+Minhas sessões agora usa uma lista com rolagem, sem cortar os treinos importados. A melhor volta completa fica em destaque junto do número da volta e do arquivo. Ordene pelos menores ou maiores tempos e use Melhor volta até (ex.: 1:00.000) para filtrar a lista sem apagar dados.
+
+Editar e Excluir ficam visíveis. A melhor volta acompanha a edição do nome e a confirmação de exclusão; salvar a identificação permite continuar na biblioteca. A remoção mantém a confirmação e preserva o original. Os tempos, as amostras e a biblioteca existente são mantidos. Atualize pelo botão Atualizações do aplicativo.
 
 ## Novidades 0.12.2
 
