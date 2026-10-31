@@ -71,7 +71,9 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           cat > notes.md <<'NOTES'
-          Bin Race 3 __VERSION__ — identificação clara antes de salvar.
+          Bin Race 3 __VERSION__ — importar várias sessões do computador.
+
+          Agora você pode selecionar vários arquivos no computador com Ctrl + clique, Shift ou Ctrl + A e importar as sessões de uma vez. No Mac, use Cmd + clique ou Shift. Cada treino fica separado em Minhas sessões; use Organizar e abrir para confirmar nome e piloto. Arrastar vários arquivos também funciona. Arquivos recusados são informados sem interromper os demais; DRK mantém os auxiliares de mesmo nome.
 
           O botão Salvar fica escuro enquanto faltarem dados obrigatórios e explica exatamente o que falta, como “Falta preencher o nome do piloto”. Ao completar os dados, fica verde e permite salvar e abrir a análise.
 
