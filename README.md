@@ -4,10 +4,10 @@ Não precisa de conta GitHub para baixar, instalar ou usar o aplicativo.
 
 [Ver a versão mais recente e as novidades](https://github.com/maumau1902-bit/bin-race-3-releases/releases/latest)
 
-| Seu computador | Instalador 0.12.4 |
+| Seu computador | Instalador 0.12.5 |
 | --- | --- |
-| Windows 10 ou 11, 64 bits | [Baixar para Windows](https://github.com/maumau1902-bit/bin-race-3-releases/releases/download/v0.12.4/Bin-Race-3-Setup-0.12.4.exe) |
-| Mac Intel ou com chip Apple (M1/M2/M3/M4 ou posterior compatível) | [Baixar para Mac — Universal](https://github.com/maumau1902-bit/bin-race-3-releases/releases/download/v0.12.4/Bin-Race-3-0.12.4-macOS-universal.dmg) |
+| Windows 10 ou 11, 64 bits | [Baixar para Windows](https://github.com/maumau1902-bit/bin-race-3-releases/releases/download/v0.12.5/Bin-Race-3-Setup-0.12.5.exe) |
+| Mac Intel ou com chip Apple (M1/M2/M3/M4 ou posterior compatível) | [Baixar para Mac — Universal](https://github.com/maumau1902-bit/bin-race-3-releases/releases/download/v0.12.5/Bin-Race-3-0.12.5-macOS-universal.dmg) |
 
 No Mac, não precisa identificar o processador: o mesmo download inclui código
 nativo para Intel e Apple Silicon; o sistema escolhe automaticamente, sem outro
@@ -37,7 +37,7 @@ Sessões e Documentos/Tracks ficam separados do aplicativo.
 
 Análises, comparação, replay/zoom, setores, biblioteca, validade, PDF e vídeo
 usam a mesma base entre sistemas. Não depende de GitHub, Codex ou Node.js.
-Não há sincronização automática entre computadores. Há cópias locais automáticas e backup/restauração manuais.
+Não há sincronização automática entre computadores. Sessões e preferências ficam no perfil local; os arquivos originais continuam em Tracks. A partir da 0.12.5, o aplicativo não tem backup da biblioteca.
 
 **Aparelhos:** seleção de Conexão do computador ajuda quando há VPN ou vários
 adaptadores. Erros/permissões UDP/TCP são explicados. Comunicação testada com
@@ -56,6 +56,12 @@ Este repositório contém somente pacotes, hashes, instruções e o fluxo públi
 de publicação. O código de desenvolvimento permanece privado; dados pessoais
 de telemetria não são publicados. Repositório privado não impede engenharia
 reversa do aplicativo distribuído.
+
+## Novidades 0.12.5
+
+Backup automático e a opção Backup e restaurar foram removidos. O app deixa de preparar cópias completas da biblioteca ao abrir, selecionar voltas ou salvar alterações. A exclusão também não prepara cópias e continua pedindo confirmação. A preparação dos backups na interface podia causar pausas fortes em bibliotecas grandes; essa tarefa e seus temporizadores foram retirados.
+
+As sessões, identificação, fichas, anotações e preferências continuam salvas no mesmo perfil local. Os arquivos originais em Tracks e as cópias antigas existentes no PC não são apagados. Tempos e amostras são preservados. Atualize pelo botão Atualizações do aplicativo. A recuperação da versão anterior durante uma falha de atualização continua no instalador, sem copiar a biblioteca durante o uso.
 
 ## Novidades 0.12.4
 
@@ -79,7 +85,7 @@ O botão Salvar informa os campos obrigatórios pendentes e fica verde quando os
 
 Mínima junto da máxima, relatório/CSV/PDF com extremos de volta e setor, evolução por piloto/pista/moto com seleção explícita, ficha de treino e notas locais de piloto/professor por curva. CSV recortado começa parcial; a confirmação fica em Editar sessão → Voltas CSV. Tempos e amostras originais são preservados.
 
-Backups automáticos em Documentos/Bin Race 3/Backups: até 10 cópias recentes e 1 GB. Em Minhas sessões → Backup e restaurar, revise uma cópia para adicionar os treinos sem substituir os atuais. Originais e auxiliares permanecem em Tracks; vídeos e originais não são embutidos nas cópias. Guarde ambas as pastas também em outro dispositivo para se proteger contra defeito do disco.
+O backup da biblioteca foi um recurso desta edição e foi removido na 0.12.5. As sessões e preferências continuam no armazenamento local; os arquivos originais e auxiliares permanecem em Tracks. Cópias antigas já existentes no PC não são apagadas pela atualização.
 
 ## Primeira abertura no Mac, sem Terminal
 
