@@ -4,10 +4,10 @@ Não precisa de conta GitHub para baixar, instalar ou usar o aplicativo.
 
 [Ver a versão mais recente e as novidades](https://github.com/maumau1902-bit/bin-race-3-releases/releases/latest)
 
-| Seu computador | Instalador 0.12.3 |
+| Seu computador | Instalador 0.12.4 |
 | --- | --- |
-| Windows 10 ou 11, 64 bits | [Baixar para Windows](https://github.com/maumau1902-bit/bin-race-3-releases/releases/download/v0.12.3/Bin-Race-3-Setup-0.12.3.exe) |
-| Mac Intel ou com chip Apple (M1/M2/M3/M4 ou posterior compatível) | [Baixar para Mac — Universal](https://github.com/maumau1902-bit/bin-race-3-releases/releases/download/v0.12.3/Bin-Race-3-0.12.3-macOS-universal.dmg) |
+| Windows 10 ou 11, 64 bits | [Baixar para Windows](https://github.com/maumau1902-bit/bin-race-3-releases/releases/download/v0.12.4/Bin-Race-3-Setup-0.12.4.exe) |
+| Mac Intel ou com chip Apple (M1/M2/M3/M4 ou posterior compatível) | [Baixar para Mac — Universal](https://github.com/maumau1902-bit/bin-race-3-releases/releases/download/v0.12.4/Bin-Race-3-0.12.4-macOS-universal.dmg) |
 
 No Mac, não precisa identificar o processador: o mesmo download inclui código
 nativo para Intel e Apple Silicon; o sistema escolhe automaticamente, sem outro
@@ -56,6 +56,12 @@ Este repositório contém somente pacotes, hashes, instruções e o fluxo públi
 de publicação. O código de desenvolvimento permanece privado; dados pessoais
 de telemetria não são publicados. Repositório privado não impede engenharia
 reversa do aplicativo distribuído.
+
+## Novidades 0.12.4
+
+O Relatório por curva agora rola inteiro, inclusive com máximas/mínimas e seções expandidas. Acesse métricas, gráfico, anotações e critérios pela roda do mouse ou teclado. A lista de curvas acompanha os detalhes nas telas maiores e escolher uma curva leva ao início da análise.
+
+Replay e gráficos reutilizam cálculos de velocidade, caminhos e geometria enquanto as voltas e o trecho continuam iguais. O cursor atualiza por quadro para reduzir processamento repetido e travadinhas. Tempos, amostras, interpolação e exportações são preservados. Atualize pelo botão Atualizações do aplicativo.
 
 ## Novidades 0.12.3
 
