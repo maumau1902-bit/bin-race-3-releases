@@ -71,27 +71,21 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           cat > notes.md <<'NOTES'
-          Bin Race 3 __VERSION__ — relatório completo com rolagem e maior fluidez.
+          Bin Race 3 __VERSION__ — sem backup da biblioteca e sem as pausas dessa tarefa.
 
-          O Relatório por curva agora rola inteiro, inclusive com máximas/mínimas e seções expandidas. Acesse métricas, gráfico, anotações e critérios pela roda do mouse ou teclado. Escolher uma curva leva ao início dos detalhes; trocar de página retorna ao topo.
+          Backup automático e a opção Backup e restaurar foram removidos. O app não prepara mais cópias completas da biblioteca ao abrir, trocar voltas ou salvar alterações. A exclusão também deixa de preparar uma cópia e continua pedindo confirmação.
 
-          Replay e gráficos reutilizam cálculos de velocidade, caminhos e geometria enquanto as voltas e o trecho não mudam. O cursor atualiza por quadro, reduzindo processamento repetido e travadinhas. Os tempos registrados, amostras, interpolação e exportações foram preservados.
+          A preparação das cópias percorria os dados de todos os treinos na interface e podia causar travadas fortes em bibliotecas grandes. Essa tarefa, seus temporizadores e suas operações de gravação foram retirados.
 
-          A biblioteca agora mostra cada treino em uma lista com rolagem, sem comprimir ou cortar os cartões. A melhor volta completa fica em destaque, com o número da volta, o nome e o arquivo de origem.
+          Suas sessões, identificação, fichas, anotações e preferências continuam no mesmo armazenamento local. Os arquivos originais continuam em Tracks. A atualização não apaga cópias antigas existentes no PC e preserva os tempos e as amostras.
 
-          Ordene do menor para o maior tempo ou do maior para o menor. O campo Melhor volta até filtra pelo tempo desejado, como 1:00.000. Editar e Excluir ficam visíveis; a melhor volta também aparece na edição e na confirmação da remoção. É possível salvar a identificação sem sair da biblioteca. Filtrar não apaga treinos; excluir continua pedindo confirmação e preservando o original.
-
-          Agora você pode selecionar vários arquivos no computador com Ctrl + clique, Shift ou Ctrl + A e importar as sessões de uma vez. No Mac, use Cmd + clique ou Shift. Cada treino fica separado em Minhas sessões; use Organizar e abrir para confirmar nome e piloto. Arrastar vários arquivos também funciona. Arquivos recusados são informados sem interromper os demais; DRK mantém os auxiliares de mesmo nome.
-
-          O botão Salvar fica escuro enquanto faltarem dados obrigatórios e explica exatamente o que falta, como “Falta preencher o nome do piloto”. Ao completar os dados, fica verde e permite salvar e abrir a análise.
-
-          Tocar antes de completar destaca o campo pendente e retorna à aba Identificação quando necessário. O formulário mantém os dados digitados. Nome com letras e piloto são obrigatórios para organizar a importação; os demais campos continuam opcionais. Comportamento igual no Windows e Mac.
-
-          Mantém análises, comparação por curva, velocidades máxima/mínima, evolução, ficha de treino, notas, PDF/CSV, vídeo, validade dos tempos, backup automático e restauração aditiva. Biblioteca, preferências, originais em Tracks e tempos/amostras são preservados. Backups não embutem originais nem vídeos.
+          Mantém importação de vários arquivos, biblioteca com melhor volta em destaque, edição de nomes, filtros por tempo, relatório por curva com rolagem completa e melhorias de fluidez do replay e dos gráficos. PDF/CSV, vídeo e análises continuam disponíveis.
 
           Windows 10/11 x64: Bin-Race-3-Setup-__VERSION__.exe. Mac Intel/Apple Silicon: único Bin-Race-3-__VERSION__-macOS-universal.dmg, macOS 12+. A primeira abertura no Mac continua sujeita às permissões do sistema, sem Developer ID/notarização nesta edição. Guia no DMG e na Ajuda. Não requer GitHub/Codex/login.
 
-          Atualize pelo botão Atualizações. Windows utiliza pacote parcial quando compatível; Mac baixa o pacote completo. Wi-Fi físico Mac, USB direto SOLO1 e envio direto de pistas continuam com as limitações já informadas. Não foram acrescentadas funções de conexão nativa ao site/mobile.
+          Atualize pelo botão Atualizações. Windows utiliza pacote parcial quando compatível; Mac baixa o pacote completo. A recuperação da versão anterior se uma atualização falhar é mantida no instalador, sem copiar a biblioteca durante o uso.
+
+          Wi-Fi físico Mac, USB direto SOLO1 e envio direto de pistas continuam com as limitações já informadas. Não foram acrescentadas funções de conexão nativa ao site/mobile.
           NOTES
           sed -i "s/__VERSION__/$APP_VERSION/g" notes.md
 
