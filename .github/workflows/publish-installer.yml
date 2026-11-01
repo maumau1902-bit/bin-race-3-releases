@@ -71,7 +71,11 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           cat > notes.md <<'NOTES'
-          Bin Race 3 __VERSION__ — melhor volta visível em Minhas sessões.
+          Bin Race 3 __VERSION__ — relatório completo com rolagem e maior fluidez.
+
+          O Relatório por curva agora rola inteiro, inclusive com máximas/mínimas e seções expandidas. Acesse métricas, gráfico, anotações e critérios pela roda do mouse ou teclado. Escolher uma curva leva ao início dos detalhes; trocar de página retorna ao topo.
+
+          Replay e gráficos reutilizam cálculos de velocidade, caminhos e geometria enquanto as voltas e o trecho não mudam. O cursor atualiza por quadro, reduzindo processamento repetido e travadinhas. Os tempos registrados, amostras, interpolação e exportações foram preservados.
 
           A biblioteca agora mostra cada treino em uma lista com rolagem, sem comprimir ou cortar os cartões. A melhor volta completa fica em destaque, com o número da volta, o nome e o arquivo de origem.
 
