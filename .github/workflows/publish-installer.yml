@@ -63,6 +63,7 @@ jobs:
           if mac_names<=names:
             mac_sums={line.split('  ',1)[1]:line.split('  ',1)[0] for line in open('Bin-Race-3-macOS-SHA256SUMS.txt').read().splitlines()}
             if mac_sums!={item['name']:item['sha256'] for item in bundle if item['name'] in mac_names and item['name'].endswith('.dmg')}:raise SystemExit('Inventário macOS divergente.')
+          with open('publish-files.json','w') as f:json.dump([item['name'] for item in bundle],f)
           PY
       - name: Publicar arquivos de atualização
         env:
@@ -96,11 +97,16 @@ jobs:
           Sem backup automático ou restauração de biblioteca. Não altera os treinos,
           originais em Tracks nem as preferências existentes. O site mantém sua versão.
           
-          Windows e Mac continuam com downloads separados. No Mac, a importação dos
-          arquivos é suportada; diagnóstico USB e atalhos Race Studio são exclusivos do
-          Windows. Wi-Fi físico no Mac e assinatura pública dos instaladores mantêm os
-          limites já documentados.
+          O foco de distribuição passa a ser **Windows instalado e navegador**.
+          No iPhone, celular ou MacBook, acesse o site público pelo Safari, Chrome ou
+          outro navegador compatível: https://binrace3.cleandog263.chatgpt.site
+          Não é necessário instalar um aplicativo Mac nativo para usar essa versão web.
+          Não há novo instalador Mac nesta entrega; as versões Mac antigas permanecem
+          no histórico. Conexão direta com aparelhos é uma função do aplicativo Windows;
+          o site abre arquivos já baixados. A assinatura Windows mantém os limites já
+          documentados.
           NOTES
           sed -i "s/__VERSION__/$APP_VERSION/g" notes.md
 
-          gh release create "v$APP_VERSION" Bin-Race-3-*.exe Bin-Race-3-*.dmg Bin-Race-3-Update-*.json Bin-Race-3-SHA256SUMS.txt Bin-Race-3-macOS-SHA256SUMS.txt --repo "$GH_REPO" --title "Bin Race 3 $APP_VERSION" --notes-file notes.md
+          mapfile -t release_files < <(python -c 'import json; print("\n".join(json.load(open("publish-files.json"))))')
+          gh release create "v$APP_VERSION" "${release_files[@]}" --repo "$GH_REPO" --title "Bin Race 3 $APP_VERSION" --notes-file notes.md
