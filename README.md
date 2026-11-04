@@ -1,61 +1,35 @@
-# Bin Race 3 — Downloads oficiais
+# Bin Race 3 — Aplicativo e downloads oficiais
 
-Não precisa de conta GitHub para baixar, instalar ou usar o aplicativo.
+Use diretamente pelo navegador, sem conta do ChatGPT ou GitHub:
 
-[Ver a versão mais recente e as novidades](https://github.com/maumau1902-bit/bin-race-3-releases/releases/latest)
+**[Abrir Bin Race 3 no iPhone, celular, MacBook ou computador](https://binrace3.cleandog263.chatgpt.site)**
 
-| Seu computador | Instalador 0.12.5 |
+No iPhone, abra no Safari e use Compartilhar → Adicionar à Tela de Início para criar o atalho do app. No MacBook, use o navegador. No Windows, você pode usar o navegador ou instalar a edição abaixo.
+
+| Opção | Acesso |
 | --- | --- |
-| Windows 10 ou 11, 64 bits | [Baixar para Windows](https://github.com/maumau1902-bit/bin-race-3-releases/releases/download/v0.12.5/Bin-Race-3-Setup-0.12.5.exe) |
-| Mac Intel ou com chip Apple (M1/M2/M3/M4 ou posterior compatível) | [Baixar para Mac — Universal](https://github.com/maumau1902-bit/bin-race-3-releases/releases/download/v0.12.5/Bin-Race-3-0.12.5-macOS-universal.dmg) |
+| Navegador — iPhone, celular, MacBook e Windows | [Abrir aplicativo](https://binrace3.cleandog263.chatgpt.site) |
+| Windows 10 ou 11, 64 bits — versão 0.12.6 | [Baixar instalador](https://github.com/maumau1902-bit/bin-race-3-releases/releases/download/v0.12.6/Bin-Race-3-Setup-0.12.6.exe) |
 
-No Mac, não precisa identificar o processador: o mesmo download inclui código
-nativo para Intel e Apple Silicon; o sistema escolhe automaticamente, sem outro
-download de componentes e sem Rosetta. Requer macOS
-12 Monterey ou mais recente, conforme o mínimo declarado pelo motor incluído;
-os testes nativos desta edição foram em macOS 15 nos dois tipos de processador.
-Não é um aplicativo para iPhone/iPad nem compatível com todo Mac antigo.
+[Notas e arquivos da versão 0.12.6](https://github.com/maumau1902-bit/bin-race-3-releases/releases/tag/v0.12.6)
 
-**Windows:** execute o instalador, siga o assistente e abra pelo atalho.
-O SmartScreen pode mostrar aviso: ainda não há certificado de editor verificado.
+**Windows:** execute o instalador e abra pelo atalho. O SmartScreen pode mostrar aviso: ainda não há certificado de editor verificado. O app consulta atualizações com internet e permite baixar e aplicar a versão após sua confirmação, com pacote incremental quando compatível.
 
-**Mac:** abra o DMG, arraste Bin Race 3 para Aplicativos, ejete a imagem e abra
-pela pasta Aplicativos ou Launchpad. Esta edição Mac de testes usa assinatura
-técnica ad-hoc, **sem Developer ID/notarização da Apple**; o Gatekeeper pode
-bloquear a primeira abertura. Se confiar na origem oficial, utilize somente a
-confirmação oferecida em Ajustes do Sistema > Privacidade e Segurança.
-Não desative as proteções. Políticas corporativas podem impedir esta edição;
-se não houver opção de aprovação, consulte o responsável pelo computador.
+**Arquivos:** importe XRK/XRZ do SOLO 2, DRK do SOLO 1 ou CSV compatível. Para GPS nesta variante do SOLO 1, selecione DRK e RRK do mesmo treino juntos no navegador. No Windows instalado, o auxiliar pode ser localizado na mesma pasta.
 
-**Atualizações:** o app verifica novas versões ao abrir com internet. Windows baixa e aplica automaticamente após sua confirmação, com pacote
-incremental quando compatível. A partir da 0.11.1, o Mac baixa/verifica o DMG
-Universal completo, prepara antes de fechar, substitui e reabre automaticamente,
-com recuperação se a nova janela não confirmar abertura. Permissões e segurança
-do macOS continuam valendo. Quem está no Mac **0.11.0 precisa instalar a versão atual
-uma vez pelo Finder** para adquirir o mecanismo. Mac ainda não tem delta.
-Sessões e Documentos/Tracks ficam separados do aplicativo.
+**Aparelhos:** a edição instalada Windows oferece conexão Wi-Fi SOLO 2. A transferência direta USB SOLO 1 ainda não está implementada; baixe pelo Race Studio 2 no Windows e depois importe os arquivos no Bin Race 3. A 0.12.6 melhora o diagnóstico USB e as orientações de driver, sem prometer uma transferência direta inexistente. O navegador importa arquivos já disponíveis; não comunica diretamente com o logger.
 
-Análises, comparação, replay/zoom, setores, biblioteca, validade, PDF e vídeo
-usam a mesma base entre sistemas. Não depende de GitHub, Codex ou Node.js.
-Não há sincronização automática entre computadores. Sessões e preferências ficam no perfil local; os arquivos originais continuam em Tracks. A partir da 0.12.5, o aplicativo não tem backup da biblioteca.
+**Seus dados:** as sessões ficam localmente em cada navegador ou perfil Windows. Não há sincronização automática entre iPhone, MacBook e PC. A edição instalada não tem backup da biblioteca desde a 0.12.5; o site possui recursos próprios e não acompanha automaticamente todas as alterações da edição Windows. Preserve os arquivos originais.
 
-**Aparelhos:** seleção de Conexão do computador ajuda quando há VPN ou vários
-adaptadores. Erros/permissões UDP/TCP são explicados. Comunicação testada com
-sockets nativos e SOLO virtual no aplicativo empacotado dos dois sistemas.
-Isso não é ensaio de rádio/firmware/TCC físico. Wi-Fi SOLO 2 confirmado por
-usuário no Windows; no Mac ainda
-experimental, sem teste físico. Extração USB direta SOLO 1 e envio direto de
-pistas/configurações continuam pendentes. Diagnóstico PnP e atalhos Race Studio
-são exclusivos do Windows. Os softwares AiM/drivers não acompanham o app.
-DRK compatível precisa do RRK do mesmo treino para analisar geometria GPS.
+Resultados de validade são diagnósticos dos dados, não cronometragem oficial ou certificação de autenticidade.
 
-Resultados de validade são diagnósticos dos dados, não cronometragem oficial,
-certificação de autenticidade ou prova de fraude. Veja limites nas notas da versão.
+**Mac instalado:** o foco atual é o navegador. Os instaladores Mac anteriores continuam no [histórico de versões](https://github.com/maumau1902-bit/bin-race-3-releases/releases); não existe instalador Mac 0.12.6 nesta entrega.
 
-Este repositório contém somente pacotes, hashes, instruções e o fluxo público
-de publicação. O código de desenvolvimento permanece privado; dados pessoais
-de telemetria não são publicados. Repositório privado não impede engenharia
-reversa do aplicativo distribuído.
+Este repositório contém pacotes, hashes e instruções. O código de desenvolvimento permanece privado; arquivos pessoais de telemetria não são publicados.
+
+## Novidades 0.12.6
+
+Diagnóstico USB SOLO 1 mais resistente à demora do Windows, orientações para erros de driver e relatório para suporte sem número de série. Melhor recuperação da consulta e abertura do Race Studio 2. Download USB direto permanece pendente.
 
 ## Novidades 0.12.5
 
@@ -87,11 +61,3 @@ Mínima junto da máxima, relatório/CSV/PDF com extremos de volta e setor, evol
 
 O backup da biblioteca foi um recurso desta edição e foi removido na 0.12.5. As sessões e preferências continuam no armazenamento local; os arquivos originais e auxiliares permanecem em Tracks. Cópias antigas já existentes no PC não são apagadas pela atualização.
 
-## Primeira abertura no Mac, sem Terminal
-
-1. Abra o DMG e arraste Bin Race 3 para Aplicativos.
-2. Ejete a imagem e tente abrir o app dentro de Aplicativos.
-3. Se a Apple informar que não pôde verificar, feche o aviso e abra  → Ajustes do Sistema → Privacidade e Segurança → Segurança.
-4. Encontre o aviso do Bin Race 3, clique em **Abrir Mesmo Assim** e confirme com senha ou Touch ID.
-
-No Monterey, o caminho é Preferências do Sistema → Segurança e Privacidade → Geral. A opção aparece depois da tentativa de abertura. Em Mac gerenciado, consulte o responsável se a opção estiver bloqueada. O DMG inclui o guia ilustrado **Primeira abertura no Mac.html**. Não remova quarentena nem desative as proteções do sistema.
