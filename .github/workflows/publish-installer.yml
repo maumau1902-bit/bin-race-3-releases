@@ -71,21 +71,35 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           cat > notes.md <<'NOTES'
-          Bin Race 3 __VERSION__ — sem backup da biblioteca e sem as pausas dessa tarefa.
-
-          Backup automático e a opção Backup e restaurar foram removidos. O app não prepara mais cópias completas da biblioteca ao abrir, trocar voltas ou salvar alterações. A exclusão também deixa de preparar uma cópia e continua pedindo confirmação.
-
-          A preparação das cópias percorria os dados de todos os treinos na interface e podia causar travadas fortes em bibliotecas grandes. Essa tarefa, seus temporizadores e suas operações de gravação foram retirados.
-
-          Suas sessões, identificação, fichas, anotações e preferências continuam no mesmo armazenamento local. Os arquivos originais continuam em Tracks. A atualização não apaga cópias antigas existentes no PC e preserva os tempos e as amostras.
-
-          Mantém importação de vários arquivos, biblioteca com melhor volta em destaque, edição de nomes, filtros por tempo, relatório por curva com rolagem completa e melhorias de fluidez do replay e dos gráficos. PDF/CSV, vídeo e análises continuam disponíveis.
-
-          Windows 10/11 x64: Bin-Race-3-Setup-__VERSION__.exe. Mac Intel/Apple Silicon: único Bin-Race-3-__VERSION__-macOS-universal.dmg, macOS 12+. A primeira abertura no Mac continua sujeita às permissões do sistema, sem Developer ID/notarização nesta edição. Guia no DMG e na Ajuda. Não requer GitHub/Codex/login.
-
-          Atualize pelo botão Atualizações. Windows utiliza pacote parcial quando compatível; Mac baixa o pacote completo. A recuperação da versão anterior se uma atualização falhar é mantida no instalador, sem copiar a biblioteca durante o uso.
-
-          Wi-Fi físico Mac, USB direto SOLO1 e envio direto de pistas continuam com as limitações já informadas. Não foram acrescentadas funções de conexão nativa ao site/mobile.
+          # Bin Race 3 __VERSION__ — diagnóstico USB do SOLO 1
+          
+          O painel do SOLO 1 explica os principais erros de driver do Windows e oferece
+          um relatório selecionável para suporte sem número de série, nomes do computador
+          ou caminhos pessoais. A consulta permite até 30 segundos para a inicialização
+          dos serviços do Windows e informa quando é necessário tentar novamente.
+          
+          Uma nova consulta ou troca de modelo remove o resultado anterior. Escape não
+          fecha a janela enquanto a consulta USB ou a abertura do Race Studio está em
+          andamento. Os atalhos do Race Studio 2 e 3 aguardam operações Wi-Fi pendentes,
+          inclusive a escolha da pasta para salvar os arquivos.
+          
+          **O download USB direto do SOLO 1 ainda não está implementado.** O caminho
+          disponível continua sendo baixar pelo Race Studio 2 e importar o DRK com os
+          auxiliares do mesmo treino; o RRK fornece GPS na variante validada. Detectar um
+          candidato USB não confirma o modelo nem a comunicação com o aparelho.
+          
+          A preparação de desenvolvimento inclui guia de coleta remota, diagnóstico
+          PowerShell e ferramentas para analisar/reproduzir capturas USBPcap. Elas não
+          enviam comandos ao aparelho nem substituem o protocolo de download ainda pendente.
+          
+          Mantém importação e biblioteca local, relatórios, replay, análise e atualização.
+          Sem backup automático ou restauração de biblioteca. Não altera os treinos,
+          originais em Tracks nem as preferências existentes. O site mantém sua versão.
+          
+          Windows e Mac continuam com downloads separados. No Mac, a importação dos
+          arquivos é suportada; diagnóstico USB e atalhos Race Studio são exclusivos do
+          Windows. Wi-Fi físico no Mac e assinatura pública dos instaladores mantêm os
+          limites já documentados.
           NOTES
           sed -i "s/__VERSION__/$APP_VERSION/g" notes.md
 
